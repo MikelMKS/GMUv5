@@ -14,4 +14,11 @@ class InicioController extends Controller
 
         return view('Inicio.index',compact('titulo','active'));
     }
+
+    public function tabla(){
+        $titulo = "INICIO";
+        $active = "navinicio";
+
+        return view('Inicio.tabla',compact('titulo','active'));
+    }
 }

@@ -25,6 +25,7 @@ route::post('valida','LoginController@valida')->name('valida');
 
 Route::middleware([RedmineSession::class])->group(function () {
 
-    route::get('inicio','InicioController@index')->name('inicio');
+    route::get('index','InicioController@index')->name('index');
+    route::get('tabla','InicioController@tabla')->name('tabla');
 
 });
