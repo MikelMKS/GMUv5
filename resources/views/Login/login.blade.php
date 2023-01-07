@@ -173,7 +173,7 @@ $("#valida").on('submit', function(e){
             },
             success: function(response){
                 if(response.status == '0'){
-                window.location.href = '{{route('inicio')}}';
+                window.location.href = '{{route('index')}}';
                 }else{
                 swalTimer('warning',response.msg,2000);
                 }
