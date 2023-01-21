@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <title>{{$tittle}}</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -164,48 +164,24 @@
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
+            {{-- <li class="dropdown-header">
               <h6>Kevin Anderson</h6>
               <span>Web Designer</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+            </li> --}}
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
-                <span>My Profile</span>
+                <span>Mi Perfil</span>
               </a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('closesesion') }}">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span>Salir</span>
               </a>
             </li>
 
@@ -223,48 +199,18 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Dashboardas</span>
+        <a class="nav-link collapsed" href="{{ route('index') }}" id="dashINICIO">
+          <i class="ri-home-2-line"></i>
+          <span>INICIO</span>
         </a>
       </li>
 
-      {{-- <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav --> --}}
-
-      {{-- <li class="nav-heading">Pages</li> --}}
-
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
+        <a class="nav-link collapsed" href="{{ route('administrativos') }}" id="dashADMINISTRATIVOS">
+          <i class="ri-bookmark-3-line"></i>
+          <span>ADMINISTRATIVOS</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
 
     </ul>
 
@@ -273,14 +219,14 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Data Tables</h1>
-        <nav>
+        <h1>{{$tittle}}</h1>
+        {{-- <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
             <li class="breadcrumb-item">Tables</li>
             <li class="breadcrumb-item active">Data</li>
           </ol>
-        </nav>
+        </nav> --}}
       </div><!-- End Page Title -->
 
       <section class="section">
@@ -289,9 +235,7 @@
   
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Datatables</h5>
-                <p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>
-  
+                
                 <!-- Table with stripped rows -->
                 @yield('contenido')
                 <!-- End Table with stripped rows -->
@@ -321,6 +265,10 @@
   <!-- Template Main JS File -->
   <script src="./../public/js/main.js"></script>
 
+  <script type="text/javascript">
+    var tittle = '{{$tittle}}';
+    $('#dash'+tittle).removeClass("collapsed");
+  </script>
 </body>
 
 </html>

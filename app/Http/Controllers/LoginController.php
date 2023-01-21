@@ -12,7 +12,7 @@ class LoginController extends Controller
         if(Session::get('Sid') == null){
             return view('Login.login');
         }else{
-            return redirect()->route('inicio');
+            return redirect()->route('index');
         }
     }
 
@@ -35,9 +35,11 @@ class LoginController extends Controller
             }else{
                 Session::put('Sid', $consulta[0]->id);
                 Session::put('Sname', $consulta[0]->user);
+                Session::put('Stipo', $consulta[0]->idTipo);
 
                 $sessionid = Session::get('Sid');
                 $sessionnick = Session::get('Sname');
+                $sessiontipo = Session::get('Stipo');
             }
         }
         
@@ -48,7 +50,8 @@ class LoginController extends Controller
     public function closesesion(){
     Session::forget('Sid');
     Session::forget('Sname');
+    Session::forget('Stipo');
 
-    return redirect()->route('admonLvl');
+    return redirect()->route('login');
     }
 }

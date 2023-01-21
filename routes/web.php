@@ -16,16 +16,22 @@
 // });
 
 use App\Http\Middleware\RedmineSession;
+use App\Http\Middleware\GMUSession;
 
 route::get('/','LoginController@login')->name('login');
 route::get('login','LoginController@login')->name('login');
-
 route::post('valida','LoginController@valida')->name('valida');
+route::get('closesesion','LoginController@closesesion')->name('closesesion');
 
 
 Route::middleware([RedmineSession::class])->group(function () {
 
     route::get('index','InicioController@index')->name('index');
     route::get('tabla','InicioController@tabla')->name('tabla');
+    
+    Route::middleware([GMUSession::class])->group(function () {
+        // ADMINISTRATIVOS
+        route::get('administrativos','AdministrativosController@index')->name('administrativos');
+    });
 
 });

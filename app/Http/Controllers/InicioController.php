@@ -8,17 +8,15 @@ use Session;
 
 class InicioController extends Controller
 {
-    public function index(){
-        $titulo = "INICIO";
-        $active = "navinicio";
+    public function __construct(){
+        $this->tittle = "INICIO";
+    }
 
-        return view('Inicio.index',compact('titulo','active'));
+    public function index(){
+        return view('Inicio.index')->with(['tittle' => $this->tittle]);
     }
 
     public function tabla(){
-        $titulo = "INICIO";
-        $active = "navinicio";
-
-        return view('Inicio.tabla',compact('titulo','active'));
+        return view('Inicio.tabla')->with(['tittle' => $this->tittle]);
     }
 }

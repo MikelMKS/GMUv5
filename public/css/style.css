@@ -10,6 +10,7 @@
 --------------------------------------------------------------*/
 :root {
   scroll-behavior: smooth;
+  --color-red: rgb(210, 57, 57);
 }
 
 body {
@@ -568,9 +569,9 @@ h1, h2, h3, h4, h5, h6 {
   } */
 }
 @media (max-width: 1199px) {
-  /* .toggle-sidebar .sidebar {
+  .toggle-sidebar .sidebar {
     left: 0;
-  } */
+  }
 }
 @media (min-width: 1200px) {
   .toggle-sidebar #main, .toggle-sidebar #footer {
@@ -606,7 +607,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  color: var(--color-red);
   transition: 0.3;
   background: #f6f9ff;
   padding: 10px 15px;
@@ -615,21 +616,21 @@ h1, h2, h3, h4, h5, h6 {
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  color: var(--color-red);
 }
 .sidebar-nav .nav-link.collapsed {
-  color: #012970;
+  color: #5c6574;
   background: #fff;
 }
 .sidebar-nav .nav-link.collapsed i {
   color: #899bbd;
 }
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
+  color: rgb(245, 112, 112);
   background: #f6f9ff;
 }
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color: rgb(245, 112, 112);
 }
 .sidebar-nav .nav-link .bi-chevron-down {
   margin-right: 0;
