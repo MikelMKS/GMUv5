@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 24px;
   margin-bottom: 0;
   font-weight: 600;
-  color: #012970;
+  color: var(--color-red);
 }
 
 /*--------------------------------------------------------------
@@ -259,7 +259,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Close Button */
 .btn-close {
-  background-size: 25%;
+  background-size: 70%;
 }
 .btn-close:focus {
   outline: 0;
@@ -889,13 +889,14 @@ h1, h2, h3, h4, h5, h6 {
 .profile .profile-card .social-links a {
   font-size: 20px;
   display: inline-block;
-  color: rgba(1, 41, 112, 0.5);
+  /* color: rgba(1, 41, 112, 0.5); */
   line-height: 0;
   margin-right: 10px;
   transition: 0.3s;
 }
 .profile .profile-card .social-links a:hover {
-  color: #012970;
+  /* color: #012970; */
+  cursor: pointer;
 }
 .profile .profile-overview .row {
   margin-bottom: 20px;
@@ -914,6 +915,37 @@ h1, h2, h3, h4, h5, h6 {
 }
 .profile .profile-edit img {
   max-width: 120px;
+}
+
+/*--------------------------------------------------------------
+# Mis social-links
+--------------------------------------------------------------*/
+.profile .profile-card .social-links .editar {
+  color: #dee20055;
+}
+.profile .profile-card .social-links .editar:hover {
+  color: #dee200;
+}
+
+.profile .profile-card .social-links .desactivar {
+  color: #2caa2c4f;
+}
+.profile .profile-card .social-links .desactivar:hover {
+  color: #2caa2c;
+}
+
+.profile .profile-card .social-links .activar {
+  color: #43434351;
+}
+.profile .profile-card .social-links .activar:hover {
+  color: #434343;
+}
+
+.profile .profile-card .social-links .eliminar {
+  color: #dc0a0a50;
+}
+.profile .profile-card .social-links .eliminar:hover {
+  color: #dc0a0a;
 }
 
 /*--------------------------------------------------------------
@@ -1083,3 +1115,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 13px;
   color: #012970;
 }
+
+/*--------------------------------------------------------------
+# Actions
+--------------------------------------------------------------*/

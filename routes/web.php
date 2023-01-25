@@ -32,6 +32,9 @@ Route::middleware([RedmineSession::class])->group(function () {
     Route::middleware([GMUSession::class])->group(function () {
         // ADMINISTRATIVOS
         route::get('administrativos','AdministrativosController@index')->name('administrativos');
+        route::get('agregarAdministrativo','AdministrativosController@agregarAdministrativo')->name('agregarAdministrativo');
+        route::post('guardarAdministrativo','AdministrativosController@guardarAdministrativo')->name('guardarAdministrativo');
+        route::post('accionesAdministrativo','AdministrativosController@accionesAdministrativo')->name('accionesAdministrativo');
     });
 
 });

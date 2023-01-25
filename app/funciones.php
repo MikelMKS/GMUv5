@@ -35,13 +35,13 @@ function mes($mes){
 }
 
 function noVacio($val,$nombre,$response){
-    if($response['status'] == '0'){
+    if($response['sta'] == '0'){
         if(empty($val)){
-            $response['status'] = '1';
+            $response['sta'] = '1';
             $response['msg'] = "DEBES LLENAR EL CAMPO '".$nombre."'";
 
         }else{
-            $response['status'] = '0';
+            $response['sta'] = '0';
             $response['msg'] = "";
         }
     }
