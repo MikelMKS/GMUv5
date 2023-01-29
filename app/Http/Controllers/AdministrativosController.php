@@ -89,7 +89,7 @@ class AdministrativosController extends Controller
         $response = noVacio($contraseña,'CONTRASEÑA',$response);
 
         if($response['sta'] == 0){
-            $consultar = DB::connection('mysql')->select("SELECT id FROM usuarios WHERE user = '$usuario'");
+            $consultar = DB::connection('mysql')->select("SELECT id FROM usuarios WHERE user = '$usuario' AND id != '$id'");
 
             if($consultar != null){
                 $response['sta'] = '1';
