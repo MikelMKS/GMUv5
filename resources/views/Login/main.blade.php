@@ -159,8 +159,12 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="./../public/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            @if(existeArchivo('assets/administrativos', Session::get('Sid') . '.png'))
+                    <img src="assets/administrativos/{{Session::get('Sid')}}.png?v={{ date('mdHis') }}" alt="Profile" class="rounded-circle">
+                @else
+                    <img src="img/usuario-vacio.png" alt="Profile" class="rounded-circle">
+                @endif
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{Session::get('Sname')}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -170,7 +174,7 @@
             </li> --}}
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" style="cursor: pointer;" onclick="editarPerfil()">
                 <i class="bi bi-person"></i>
                 <span>Mi Perfil</span>
               </a>
@@ -205,12 +209,14 @@
         </a>
       </li>
 
+      @if(Session::get('Stipo') == 1)
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('administrativos') }}" id="dashADMINISTRATIVOS">
           <i class="ri-bookmark-3-line"></i>
           <span>ADMINISTRATIVOS</span>
         </a>
       </li>
+      @endif
 
     </ul>
 
@@ -243,6 +249,19 @@
               </div>
             </div>
   
+              {{--  --}}
+              <div class="modal fade" id="modaleditarPerfil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 50px;max-width: 100%;">
+                <div class="modal-dialog modal-md" role="document" style="height: 200px; width: 1500px;">
+                    <div class="modal-content">
+                        {{--  --}}
+                        <div id="modaleditarPerfilBody">
+
+                        </div>
+                        {{--  --}}
+                    </div>
+                </div>
+              </div>
+              {{--  --}}
           </div>
         </div>
       </section>
@@ -267,6 +286,26 @@
 
   <script type="text/javascript">
     var tittle = '{{$tittle}}';
+
+    function editarPerfil(){
+        $.ajax({
+            data: { _token: "{{ csrf_token() }}" },
+            type : "GET",
+            url : "{{route('editarPerfil')}}",
+            beforeSend : function () {
+                $("#modaleditarPerfilBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+            },
+            success:  function (response) {
+                $('#modaleditarPerfil').modal({backdrop: 'static',keyboard: false});
+                $('#modaleditarPerfil').modal('show');
+                $("#modaleditarPerfilBody").html(response);
+            },
+            error: function(error) {
+                swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+            }
+        });
+    }
+
     $('#dash'+tittle).removeClass("collapsed");
   </script>
 </body>

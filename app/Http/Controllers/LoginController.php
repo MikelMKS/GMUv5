@@ -17,7 +17,7 @@ class LoginController extends Controller
     }
 
     public function valida(Request $request){
-        $response = array('status' => 0,'msg' => ''); 
+        $response = array('sta' => 0,'msg' => ''); 
 
         $username = $request->username;
 		$password = $request->password;
@@ -26,11 +26,11 @@ class LoginController extends Controller
         $response = noVacio($password,'CONTRASEÑA',$response);
         
 
-        if($response['status'] != '1'){
+        if($response['sta'] != '1'){
             $consulta = DB::connection('mysql')->select("SELECT * FROM usuarios WHERE user = '$username' AND pass = '$password'");
 
             if($consulta == null){
-                $response['status'] = '1';
+                $response['sta'] = '1';
                 $response['msg'] = "USUARIO O CONTRASEÑA INCORRECTOS";
             }else{
                 Session::put('Sid', $consulta[0]->id);
@@ -53,5 +53,51 @@ class LoginController extends Controller
     Session::forget('Stipo');
 
     return redirect()->route('login');
+    }
+
+    public function editarPerfil(){
+        $id = Session::get('Sid');
+        $datos = DB::connection('mysql')->select("SELECT * FROM usuarios WHERE id = '$id'");
+
+        return view('Login.editarPerfil',compact('id','datos'));
+    }
+
+    public function updatePerfil(Request $request){
+        $response = array('sta' => 0,'msg' => ''); 
+
+        $id = $request->idEditPerfil;
+        $usuario = $request->usuarioEditPerfil;
+        $contraseña = $request->contraseñaEditPerfil;
+        $nombre = $request->nombreEditPerfil;
+        $imagen = $request->file('imagenEditPerfil');
+
+        $response = noVacio($usuario,'USUARIO',$response);
+        $response = noVacio($contraseña,'CONTRASEÑA',$response);
+
+        if($response['sta'] == 0){
+            $consultar = DB::connection('mysql')->select("SELECT id FROM usuarios WHERE user = '$usuario'");
+
+            if($consultar != null){
+                $response['sta'] = '1';
+                $response['msg'] = "YA EXISTE UN USUARIO CON ESE NOMBRE";
+            }
+
+            if($response['sta'] == 0){
+                DB::connection('mysql')->table('usuarios')->where('id','=',$id)->update([
+                    'user' => $usuario,
+                    'pass' => $contraseña,
+                    'nombre' => $nombre,
+                ]);
+
+                if($imagen != null){
+                    $filename = $id.'.png';
+                    \Storage::disk('administrativos')->put($filename, \File::get($imagen));
+                }
+
+                Session::put('Sname', $usuario);
+            }
+        }
+
+        echo json_encode($response);
     }
 }

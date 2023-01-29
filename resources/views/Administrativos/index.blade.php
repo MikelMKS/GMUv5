@@ -16,14 +16,14 @@
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                 {{--  --}}
                 @if(existeArchivo('assets/administrativos', $a->id . '.png'))
-                    <img src="assets/administrativos/{{$a->id}}.png" alt="Profile" class="rounded-circle">
+                    <img src="assets/administrativos/{{$a->id}}.png?v={{ date('mdHis') }}" style="width:80%;height:120px;" alt="Profile" class="rounded-circle">
                 @else
-                    <img src="img/usuario-vacio.png" alt="Profile" class="rounded-circle">
+                    <img src="img/usuario-vacio.png" alt="Profile" style="width:80%;height:120px;" class="rounded-circle">
                 @endif
                 <h2>{{$a->user}}</h2>
                 <h3>{{$a->nombre}}</h3>
                 <div class="social-links mt-2">
-                    <a><i class="editar ri-edit-box-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="EDITAR"></i></a>
+                    <a><i class="editar ri-edit-box-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="EDITAR" onclick="editarAdministrativo('{{$a->id}}');"></i></a>
                     @if($a->idTipo != 1)
                         @if($a->estatus == 1)
                             <a><i class="desactivar ri-door-lock-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="DESACTIVAR" onclick="accionesAdministrativo('{{$a->id}}',0)"></i></a>
@@ -45,9 +45,22 @@
 {{--  --}}
 <div class="modal fade" id="modalagregarAdministrativo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 50px;max-width: 100%;">
     <div class="modal-dialog modal-md" role="document" style="height: 200px; width: 1500px;">
-        <div class="modal-content" id="modalBodyagregarAdministrativo">
+        <div class="modal-content">
             {{--  --}}
             <div id="modalagregarAdministrativoBody">
+
+            </div>
+            {{--  --}}
+        </div>
+    </div>
+</div>
+{{--  --}}
+{{--  --}}
+<div class="modal fade" id="modaleditarAdministrativo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 50px;max-width: 100%;">
+    <div class="modal-dialog modal-md" role="document" style="height: 200px; width: 1500px;">
+        <div class="modal-content">
+            {{--  --}}
+            <div id="modaleditarAdministrativoBody">
 
             </div>
             {{--  --}}
@@ -70,6 +83,25 @@ function agregarAdministrativo(){
             $('#modalagregarAdministrativo').modal({backdrop: 'static',keyboard: false});
             $('#modalagregarAdministrativo').modal('show');
             $("#modalagregarAdministrativoBody").html(response);
+        },
+        error: function(error) {
+            swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+        }
+    });
+}
+
+function editarAdministrativo(id){
+    $.ajax({
+        data: { 'id':id, _token: "{{ csrf_token() }}" },
+        type : "GET",
+        url : "{{route('editarAdministrativo')}}",
+        beforeSend : function () {
+            $("#modaleditarAdministrativoBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+        },
+        success:  function (response) {
+            $('#modaleditarAdministrativo').modal({backdrop: 'static',keyboard: false});
+            $('#modaleditarAdministrativo').modal('show');
+            $("#modaleditarAdministrativoBody").html(response);
         },
         error: function(error) {
             swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);

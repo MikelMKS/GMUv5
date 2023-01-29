@@ -172,7 +172,7 @@ $("#valida").on('submit', function(e){
                 swalLoading();
             },
             success: function(response){
-                if(response.status == '0'){
+                if(response.sta == '0'){
                 window.location.href = '{{route('index')}}';
                 }else{
                 swalTimer('warning',response.msg,2000);

@@ -29,11 +29,16 @@ Route::middleware([RedmineSession::class])->group(function () {
     route::get('index','InicioController@index')->name('index');
     route::get('tabla','InicioController@tabla')->name('tabla');
     
+    route::get('editarPerfil','LoginController@editarPerfil')->name('editarPerfil');
+    route::post('updatePerfil','LoginController@updatePerfil')->name('updatePerfil');
+    
     Route::middleware([GMUSession::class])->group(function () {
         // ADMINISTRATIVOS
         route::get('administrativos','AdministrativosController@index')->name('administrativos');
         route::get('agregarAdministrativo','AdministrativosController@agregarAdministrativo')->name('agregarAdministrativo');
         route::post('guardarAdministrativo','AdministrativosController@guardarAdministrativo')->name('guardarAdministrativo');
+        route::get('editarAdministrativo','AdministrativosController@editarAdministrativo')->name('editarAdministrativo');
+        route::post('updateAdministrativo','AdministrativosController@updateAdministrativo')->name('updateAdministrativo');
         route::post('accionesAdministrativo','AdministrativosController@accionesAdministrativo')->name('accionesAdministrativo');
     });
 

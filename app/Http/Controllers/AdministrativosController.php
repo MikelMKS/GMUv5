@@ -34,19 +34,28 @@ class AdministrativosController extends Controller
         $response = noVacio($contraseña,'CONTRASEÑA',$response);
 
         if($response['sta'] == 0){
-            DB::connection('mysql')->table('usuarios')->insert([
-                'user' => $usuario,
-                'pass' => $contraseña,
-                'idTipo' => 2,
-                'nombre' => $nombre,
-                'estatus' => 1
-            ]);
+            $consultar = DB::connection('mysql')->select("SELECT id FROM usuarios WHERE user = '$usuario'");
 
-            if($imagen != null){
-                $nextid = DB::getPdo()->lastInsertId();
+            if($consultar != null){
+                $response['sta'] = '1';
+                $response['msg'] = "YA EXISTE UN USUARIO CON ESE NOMBRE";
+            }
 
-                $filename = $nextid.'.png';
-                \Storage::disk('administrativos')->put($filename, \File::get($imagen));
+            if($response['sta'] == 0){
+                DB::connection('mysql')->table('usuarios')->insert([
+                    'user' => $usuario,
+                    'pass' => $contraseña,
+                    'idTipo' => 2,
+                    'nombre' => $nombre,
+                    'estatus' => 1
+                ]);
+
+                if($imagen != null){
+                    $nextid = DB::getPdo()->lastInsertId();
+
+                    $filename = $nextid.'.png';
+                    \Storage::disk('administrativos')->put($filename, \File::get($imagen));
+                }
             }
         }
 
@@ -58,5 +67,49 @@ class AdministrativosController extends Controller
         $t = $_REQUEST['t'];
 
         DB::connection('mysql')->table('usuarios')->where('id','=',$id)->update(['estatus' => $t]);
+    }
+
+    public function editarAdministrativo(){
+        $id = $_REQUEST['id'];
+        $datos = DB::connection('mysql')->select("SELECT * FROM usuarios WHERE id = '$id'");
+
+        return view('Administrativos.editarAdministrativo',compact('id','datos'));
+    }
+
+    public function updateAdministrativo(Request $request){
+        $response = array('sta' => 0,'msg' => ''); 
+
+        $id = $request->idEdit;
+        $usuario = $request->usuarioEdit;
+        $contraseña = $request->contraseñaEdit;
+        $nombre = $request->nombreEdit;
+        $imagen = $request->file('imagenEdit');
+
+        $response = noVacio($usuario,'USUARIO',$response);
+        $response = noVacio($contraseña,'CONTRASEÑA',$response);
+
+        if($response['sta'] == 0){
+            $consultar = DB::connection('mysql')->select("SELECT id FROM usuarios WHERE user = '$usuario'");
+
+            if($consultar != null){
+                $response['sta'] = '1';
+                $response['msg'] = "YA EXISTE UN USUARIO CON ESE NOMBRE";
+            }
+
+            if($response['sta'] == 0){
+                DB::connection('mysql')->table('usuarios')->where('id','=',$id)->update([
+                    'user' => $usuario,
+                    'pass' => $contraseña,
+                    'nombre' => $nombre,
+                ]);
+
+                if($imagen != null){
+                    $filename = $id.'.png';
+                    \Storage::disk('administrativos')->put($filename, \File::get($imagen));
+                }
+            }
+        }
+
+        echo json_encode($response);
     }
 }

@@ -14,7 +14,7 @@
             <input type="password" class="form-control inputtext" id="contraseña" name="contraseña" placeholder="CONTRASEÑA" maxlength="20" autocomplete="new-password">
 
             <label>NOMBRE:</label>
-            <input type="text" class="form-control inputtext" id="nombre" name="nombre" placeholder="NOMBRE" maxlength="20" autocomplete="off">
+            <input type="text" class="form-control inputtext" id="nombre" name="nombre" placeholder="NOMBRE" maxlength="100" autocomplete="off">
             
             <label>IMAGEN:</label>
             <input type="file" class="form-control" name="imagen" id="imagen" accept="image/*">
@@ -23,7 +23,7 @@
     <!---------------------->
 </form>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm" onclick="$('#guardarAdministrativo').submit();">GUARDAR</button>
+    <button type="button" class="btn btn-success btn-sm" onclick="$('#guardarAdministrativo').submit();">GUARDAR</button>
     <button type="button" class="btn btn-secondary btn-sm" onclick="$('#modalagregarAdministrativo').modal('hide');">CERRAR</button>
 </div>
 
@@ -43,7 +43,6 @@ $("#guardarAdministrativo").on('submit', function(e){
         },
         success: function(response){
             if(response.sta == 0){
-                $('#modaledit').modal('toggle');
                 swalTimer('success','ACTUALIZANDO','');
                 window.location.reload(); 
             }else{

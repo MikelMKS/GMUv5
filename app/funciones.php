@@ -39,7 +39,6 @@ function noVacio($val,$nombre,$response){
         if(empty($val)){
             $response['sta'] = '1';
             $response['msg'] = "DEBES LLENAR EL CAMPO '".$nombre."'";
-
         }else{
             $response['sta'] = '0';
             $response['msg'] = "";
