@@ -82,6 +82,12 @@
       <ul class="d-flex align-items-center">
 
         <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="ri-user-add-line"></i>
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
@@ -165,7 +171,7 @@
                     <img src="img/usuario-vacio.png" alt="Profile" class="rounded-circle">
                 @endif
             <span class="d-none d-md-block dropdown-toggle ps-2">{{Session::get('Sname')}}</span>
-          </a><!-- End Profile Iamge Icon -->
+          </a>
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             {{-- <li class="dropdown-header">
@@ -206,6 +212,13 @@
         <a class="nav-link collapsed" href="{{ route('index') }}" id="dashINICIO">
           <i class="ri-home-2-line"></i>
           <span>INICIO</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('clientes') }}" id="dashCLIENTES">
+          <i class="ri-user-line"></i>
+          <span>CLIENTES</span>
         </a>
       </li>
 
