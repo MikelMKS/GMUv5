@@ -74,7 +74,8 @@
     &nbsp;&nbsp;
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="./../public/img/logo.png" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
+        <img src="./../public/img/text-logo.png" alt="">
+        {{-- <span class="d-none d-lg-block">NiceAdmin</span> --}}
       </a>
     </div><!-- End Logo -->
 
@@ -263,8 +264,8 @@
             </div>
   
               {{--  --}}
-              <div class="modal fade" id="modaleditarPerfil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 50px;max-width: 100%;">
-                <div class="modal-dialog modal-md" role="document" style="height: 200px; width: 1500px;">
+              <div class="modal fade" id="modaleditarPerfil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
                     <div class="modal-content">
                         {{--  --}}
                         <div id="modaleditarPerfilBody">

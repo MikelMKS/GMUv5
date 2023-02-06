@@ -43,8 +43,8 @@
 </section>
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 {{--  --}}
-<div class="modal fade" id="modalagregarAdministrativo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 50px;max-width: 100%;">
-    <div class="modal-dialog modal-md" role="document" style="height: 200px; width: 1500px;">
+<div class="modal fade" id="modalagregarAdministrativo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             {{--  --}}
             <div id="modalagregarAdministrativoBody">
@@ -56,8 +56,8 @@
 </div>
 {{--  --}}
 {{--  --}}
-<div class="modal fade" id="modaleditarAdministrativo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 50px;max-width: 100%;">
-    <div class="modal-dialog modal-md" role="document" style="height: 200px; width: 1500px;">
+<div class="modal fade" id="modaleditarAdministrativo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             {{--  --}}
             <div id="modaleditarAdministrativoBody">

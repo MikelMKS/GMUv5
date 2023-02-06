@@ -27,19 +27,25 @@ class LoginController extends Controller
         
 
         if($response['sta'] != '1'){
-            $consulta = DB::connection('mysql')->select("SELECT * FROM usuarios WHERE user = '$username' AND pass = '$password'");
+            $consulta = DB::connection('mysql')->select("SELECT * FROM usuarios WHERE user = '$username' AND pass = '$password' AND estatus != 2");
+
 
             if($consulta == null){
                 $response['sta'] = '1';
                 $response['msg'] = "USUARIO O CONTRASEÑA INCORRECTOS";
             }else{
-                Session::put('Sid', $consulta[0]->id);
-                Session::put('Sname', $consulta[0]->user);
-                Session::put('Stipo', $consulta[0]->idTipo);
+                if($consulta[0]->estatus == 0){
+                    $response['sta'] = '1';
+                    $response['msg'] = "ACCESO DE USUARIO DESACTIVADO";
+                }else{
+                    Session::put('Sid', $consulta[0]->id);
+                    Session::put('Sname', $consulta[0]->user);
+                    Session::put('Stipo', $consulta[0]->idTipo);
 
-                $sessionid = Session::get('Sid');
-                $sessionnick = Session::get('Sname');
-                $sessiontipo = Session::get('Stipo');
+                    $sessionid = Session::get('Sid');
+                    $sessionnick = Session::get('Sname');
+                    $sessiontipo = Session::get('Stipo');
+                }
             }
         }
         

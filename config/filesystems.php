@@ -53,6 +53,11 @@ return [
             'root' => public_path('/assets/administrativos'),
         ],
 
+        'clientes' => [
+            'driver' => 'local',
+            'root' => public_path('/assets/clientes'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

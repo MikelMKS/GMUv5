@@ -9,9 +9,9 @@
     <div class="modal-body">
         <div class="bodymodal text-center">
             @if(existeArchivo('assets/administrativos', $datos[0]->id . '.png'))
-                <img src="assets/administrativos/{{$datos[0]->id}}.png?v={{ date('mdHis') }}" style="max-width:20%;max-height:20%;" alt="Profile" class="rounded-circle">
+                <img src="assets/administrativos/{{$datos[0]->id}}.png?v={{ date('mdHis') }}" id="blahEditPerf" style="max-width:20%;max-height:20%;" alt="Profile" class="rounded-circle">
             @else
-                <img src="img/usuario-vacio.png" alt="Profile" style="max-width:20%;max-height:20%;" class="rounded-circle">
+                <img src="img/usuario-vacio.png" id="blahEditPerf" alt="Profile" style="max-width:20%;max-height:20%;" class="rounded-circle">
             @endif
         </div>
     </div>
@@ -80,5 +80,22 @@ $("#updatePerfil").on('submit', function(e){
             swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
         }
     });
+});
+
+
+function readURLEditPerf(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blahEditPerf').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#imagenEditPerfil").change(function(){
+    readURLEditPerf(this);
 });
 </script>

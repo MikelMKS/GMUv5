@@ -12,10 +12,13 @@
     background-color: #da1e1e;
     color: #ffffff;
     text-align: left;
+    border-bottom: none !important;
 }
 
 .filtercol {
+    padding: 1px !important;
     background-color: #da1e1e;
+    border-top: none !important;
 }
 
 .styled-table th,
@@ -33,12 +36,12 @@
 }
 
 .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #2618a1;
+    border-bottom: 2px solid var(--color-red);
 }
 
 .styled-table tbody tr.active-row {
     font-weight: bold;
-    color: #2618a1;
+    color: var(--color-red);
 }
 
 .styled-table tbody tr:hover {
@@ -65,7 +68,7 @@
 /* -----------------------------------------------------------------------INPUT------------------------------------------------------------------------------ */
 .thfilter {
     border-radius: 10px !important;
-    border: 2px solid #2618a1;
+    border: 2px solid var(--color-red);
     width: 100%;
     padding: 1px;
     margin: 0px;
