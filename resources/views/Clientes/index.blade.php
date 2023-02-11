@@ -4,6 +4,7 @@
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <h5 class="card-title">
     <button type="button" class="btn btn-success" onclick="agregarCliente();">Agregar</button>
+    <span class="colvisBut"></span>
 </h5>
 <p></p>
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
@@ -96,7 +97,14 @@ var Dtable = $('#Dtable').DataTable({
     columnDefs: [
         { "targets": c_CID }
     ],
+    buttons: [{
+        text: 'COLUMNAS',
+        extend: 'colvis',
+    }],
 })
+
+Dtable.columns([c_REG,c_DEU]).visible(false);
+Dtable.buttons().container().appendTo($('.colvisBut'));
 
 contador(Dtable);
 

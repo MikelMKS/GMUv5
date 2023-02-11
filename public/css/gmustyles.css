@@ -11,7 +11,7 @@
 .col {
     background-color: #da1e1e;
     color: #ffffff;
-    text-align: left;
+    text-align: center !important;
     border-bottom: none !important;
 }
 
