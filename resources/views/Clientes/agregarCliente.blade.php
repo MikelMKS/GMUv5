@@ -11,7 +11,7 @@
             <input type="text" class="form-control inputtext" id="nombre" name="nombre" placeholder="NOMBRE" maxlength="200" autocomplete="off">
 
             <label>APELLIDO PATERNO:</label>
-            <input type="text" class="form-control inputtext" id="apellidoPat" name="apellidoPat" placeholder="APELLIDO PAT" maxlength="200" autocomplete="new-password">
+            <input type="text" class="form-control inputtext" id="apellidoPat" name="apellidoPat" placeholder="APELLIDO PAT" maxlength="200" autocomplete="off">
 
             <label>APELLIDO MATERNO:</label>
             <input type="text" class="form-control inputtext" id="apellidoMat" name="apellidoMat" placeholder="APELLIDO MAT" maxlength="200" autocomplete="off">

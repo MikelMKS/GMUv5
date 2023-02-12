@@ -25,7 +25,7 @@
         <tbody>
             @foreach($clientes as $t)
                 <tr>
-                    <td>{{$t->id}}</td>
+                    <td class="drillin" onclick="verCliente('{{$t->id}}')">{{$t->id}}</td>
                     <td class="lefti">{{$t->nombre}} {{$t->apellidoP}} {{$t->apellidoM}}</td>
                     <td>{{$t->telefono}}</td>
                     <td>{{$t->fechaNac}}</td>
@@ -56,6 +56,19 @@
         <div class="modal-content">
             {{--  --}}
             <div id="modalagregarClienteBody">
+
+            </div>
+            {{--  --}}
+        </div>
+    </div>
+</div>
+{{--  --}}
+{{--  --}}
+<div class="modal fade" id="modalverCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            {{--  --}}
+            <div id="modalverClienteBody">
 
             </div>
             {{--  --}}
@@ -133,6 +146,25 @@ function agregarCliente(){
             $('#modalagregarCliente').modal({backdrop: 'static',keyboard: false});
             $('#modalagregarCliente').modal('show');
             $("#modalagregarClienteBody").html(response);
+        },
+        error: function(error) {
+            swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+        }
+    });
+}
+
+function verCliente(id){
+    $.ajax({
+        data: { 'id':id, _token: "{{ csrf_token() }}" },
+        type : "GET",
+        url : "{{route('verCliente')}}",
+        beforeSend : function () {
+            $("#modalverClienteBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+        },
+        success:  function (response) {
+            $('#modalverCliente').modal({backdrop: 'static',keyboard: false});
+            $('#modalverCliente').modal('show');
+            $("#modalverClienteBody").html(response);
         },
         error: function(error) {
             swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);

@@ -97,9 +97,10 @@
 }
 /*---------------------------------------------------------------------- /FA ICONOS ----------------------------------------------------------------------*/
 .drillin{
-    text-decoration: underline #2d629a;
+    /* text-decoration: underline #2d629a; */
     cursor: pointer;
     color: #2d629a;
+    font-weight: 900;
 }
 
 .pointer{

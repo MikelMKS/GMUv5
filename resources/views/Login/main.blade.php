@@ -73,7 +73,7 @@
     <div class="d-flex align-items-center justify-content-between">
     <i class="bi bi-list toggle-sidebar-btn"></i>
     &nbsp;&nbsp;
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="{{ route('index') }}" class="logo d-flex align-items-center">
         <img src="./../public/img/logo.png" alt="">
         <img src="./../public/img/text-logo.png" alt="">
         {{-- <span class="d-none d-lg-block">NiceAdmin</span> --}}
@@ -84,7 +84,7 @@
       <ul class="d-flex align-items-center">
 
         <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link nav-icon" style="cursor:pointer" onclick="agregarClienteMain();" data-bs-toggle="dropdown">
             <i class="ri-user-add-line"></i>
           </a>
         </li>
@@ -263,13 +263,26 @@
   
               </div>
             </div>
-  
+              {{-- --------------------------------------------------------------------------------------------------------------------- --}}
               {{--  --}}
               <div class="modal fade" id="modaleditarPerfil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-md" role="document">
+                  <div class="modal-content">
+                    {{--  --}}
+                    <div id="modaleditarPerfilBody">
+                      
+                    </div>
+                    {{--  --}}
+                  </div>
+                </div>
+              </div>
+              {{--  --}}
+              {{--  --}}
+              <div class="modal fade" id="modalagregarClienteMain" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
                     <div class="modal-content">
                         {{--  --}}
-                        <div id="modaleditarPerfilBody">
+                        <div id="modalagregarClienteMainBody">
 
                         </div>
                         {{--  --}}
@@ -277,6 +290,7 @@
                 </div>
               </div>
               {{--  --}}
+              {{-- --------------------------------------------------------------------------------------------------------------------- --}}
           </div>
         </div>
       </section>
@@ -314,6 +328,25 @@
                 $('#modaleditarPerfil').modal({backdrop: 'static',keyboard: false});
                 $('#modaleditarPerfil').modal('show');
                 $("#modaleditarPerfilBody").html(response);
+            },
+            error: function(error) {
+                swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+            }
+        });
+    }
+
+    function agregarClienteMain(){
+        $.ajax({
+            data: { _token: "{{ csrf_token() }}" },
+            type : "GET",
+            url : "{{route('agregarClienteMain')}}",
+            beforeSend : function () {
+                $("#modalagregarClienteMainBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+            },
+            success:  function (response) {
+                $('#modalagregarClienteMain').modal({backdrop: 'static',keyboard: false});
+                $('#modalagregarClienteMain').modal('show');
+                $("#modalagregarClienteMainBody").html(response);
             },
             error: function(error) {
                 swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);

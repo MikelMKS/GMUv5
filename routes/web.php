@@ -45,6 +45,10 @@ Route::middleware([RedmineSession::class])->group(function () {
     // CLIENTES
     route::get('clientes','ClientesController@index')->name('clientes');
     route::get('agregarCliente','ClientesController@agregarCliente')->name('agregarCliente');
+    route::get('agregarClienteMain','ClientesController@agregarClienteMain')->name('agregarClienteMain');
     route::post('guardarCliente','ClientesController@guardarCliente')->name('guardarCliente');
+
+    route::get('verCliente','ClientesController@verCliente')->name('verCliente');
+    route::post('updateCliente','ClientesController@updateCliente')->name('updateCliente');
 
 });
