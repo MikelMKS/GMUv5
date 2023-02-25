@@ -66,7 +66,6 @@
 </head>
 
 <body class="toggle-sidebar">
-
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -84,85 +83,18 @@
       <ul class="d-flex align-items-center">
 
         <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" style="cursor:pointer" data-bs-toggle="dropdown">
+            <i class="ri-money-dollar-box-line"></i>
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
           <a class="nav-link nav-icon" style="cursor:pointer" onclick="agregarClienteMain();" data-bs-toggle="dropdown">
             <i class="ri-user-add-line"></i>
           </a>
         </li>
 
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
-          </a><!-- End Notification Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
-            </li>
-
-          </ul><!-- End Notification Dropdown Items -->
-
-        </li><!-- End Notification Nav -->
+        @include('Login.getAlertas')
 
         <li class="nav-item dropdown pe-3">
 
@@ -214,6 +146,13 @@
         <a class="nav-link collapsed" href="{{ route('index') }}" id="dashINICIO">
           <i class="ri-home-2-line"></i>
           <span>INICIO</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('gym') }}" id="dashCLIENTES">
+          <i class="ri-lifebuoy-line"></i>
+          <span>GYM</span>
         </a>
       </li>
 
@@ -290,6 +229,20 @@
                 </div>
               </div>
               {{--  --}}
+              {{--  --}}
+              <div class="modal fade" id="modalverNotificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        {{--  --}}
+                        <div id="modalverNotificacionBody">
+
+                        </div>
+                        {{--  --}}
+                    </div>
+                </div>
+              </div>
+              {{--  --}}
+              {{--  --}}
               {{-- --------------------------------------------------------------------------------------------------------------------- --}}
           </div>
         </div>
@@ -352,6 +305,45 @@
                 swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
             }
         });
+    }
+
+    revisarAlertas();
+    function revisarAlertas(){
+        $.ajax({
+            data: { _token: "{{ csrf_token() }}" },
+            type : "GET",
+            url : "{{route('revisarAlertas')}}",
+            beforeSend : function () {
+            },
+            success:  function (response) {
+              if(response == 1){
+                location.reload();
+              }
+            },
+            error: function(error) {
+            }
+        });
+    }
+
+    function verNotificacion(tipo){
+      if(tipo == 1){
+        $.ajax({
+              data: { 'tipo':tipo, _token: "{{ csrf_token() }}" },
+              type : "GET",
+              url : "{{route('verNotificacion')}}",
+              beforeSend : function () {
+                  $("#modalverNotificacionBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+              },
+              success:  function (response) {
+                  $('#modalverNotificacion').modal({backdrop: 'static',keyboard: false});
+                  $('#modalverNotificacion').modal('show');
+                  $("#modalverNotificacionBody").html(response);
+              },
+              error: function(error) {
+                  swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+              }
+        });
+      }
     }
 
     $('#dash'+tittle).removeClass("collapsed");

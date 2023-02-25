@@ -23,8 +23,12 @@ route::get('login','LoginController@login')->name('login');
 route::post('valida','LoginController@valida')->name('valida');
 route::get('closesesion','LoginController@closesesion')->name('closesesion');
 
-
 Route::middleware([RedmineSession::class])->group(function () {
+
+    //  ALERTAS
+    route::get('revisarAlertas','AlertasController@revisarAlertas')->name('revisarAlertas');
+    route::get('verNotificacion','AlertasController@verNotificacion')->name('verNotificacion');
+    route::get('enteradoCumpleaños','AlertasController@enteradoCumpleaños')->name('enteradoCumpleaños');
 
     route::get('index','InicioController@index')->name('index');
     route::get('tabla','InicioController@tabla')->name('tabla');
@@ -47,8 +51,12 @@ Route::middleware([RedmineSession::class])->group(function () {
     route::get('agregarCliente','ClientesController@agregarCliente')->name('agregarCliente');
     route::get('agregarClienteMain','ClientesController@agregarClienteMain')->name('agregarClienteMain');
     route::post('guardarCliente','ClientesController@guardarCliente')->name('guardarCliente');
-
+    
     route::get('verCliente','ClientesController@verCliente')->name('verCliente');
     route::post('updateCliente','ClientesController@updateCliente')->name('updateCliente');
+    
+
+    // GYM
+    route::get('gym','GYMController@index')->name('gym');
 
 });
