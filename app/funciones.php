@@ -64,6 +64,14 @@ function flotFormatoM2($val){
     return $for;
 }
 
+function flotFormatoM20($val){
+    $for = number_format($val, 2, '.', ',');
+    if($for <= '0'){
+        $for = 0;
+    }
+    return $for;
+}
+
 function flotFormatoMPesos($val){
     $for = number_format($val, 0, '.', ',');
     if($for <= '0'){

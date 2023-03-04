@@ -83,7 +83,7 @@
       <ul class="d-flex align-items-center">
 
         <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" style="cursor:pointer" data-bs-toggle="dropdown">
+          <a class="nav-link nav-icon" style="cursor:pointer" onclick="agregarServicioMain();" data-bs-toggle="dropdown">
             <i class="ri-money-dollar-box-line"></i>
           </a>
         </li>
@@ -150,9 +150,9 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('gym') }}" id="dashCLIENTES">
+        <a class="nav-link collapsed" href="{{ route('servicios') }}" id="dashSERVICIOS">
           <i class="ri-lifebuoy-line"></i>
-          <span>GYM</span>
+          <span>SERVICIOS</span>
         </a>
       </li>
 
@@ -222,6 +222,19 @@
                     <div class="modal-content">
                         {{--  --}}
                         <div id="modalagregarClienteMainBody">
+
+                        </div>
+                        {{--  --}}
+                    </div>
+                </div>
+              </div>
+              {{--  --}}
+              {{--  --}}
+              <div class="modal fade" id="modalagregarServicioMain" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        {{--  --}}
+                        <div id="modalagregarServicioMainBody">
 
                         </div>
                         {{--  --}}
@@ -300,6 +313,25 @@
                 $('#modalagregarClienteMain').modal({backdrop: 'static',keyboard: false});
                 $('#modalagregarClienteMain').modal('show');
                 $("#modalagregarClienteMainBody").html(response);
+            },
+            error: function(error) {
+                swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+            }
+        });
+    }
+
+    function agregarServicioMain(){
+        $.ajax({
+            data: { _token: "{{ csrf_token() }}" },
+            type : "GET",
+            url : "{{route('agregarServicioMain')}}",
+            beforeSend : function () {
+                $("#modalagregarServicioMainBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+            },
+            success:  function (response) {
+                $('#modalagregarServicioMain').modal({backdrop: 'static',keyboard: false});
+                $('#modalagregarServicioMain').modal('show');
+                $("#modalagregarServicioMainBody").html(response);
             },
             error: function(error) {
                 swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);

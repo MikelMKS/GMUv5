@@ -3,7 +3,7 @@
 @section('contenido')
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <h5 class="card-title">
-    <button type="button" class="btn btn-success" onclick="agregarCliente();">Agregar</button>
+    <button type="button" class="btn btn-success" onclick="agregarClienteMain();">Agregar</button>
     <span class="colvisBut"></span>
 </h5>
 <p></p>
@@ -50,19 +50,6 @@
 </div>
 </section>
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
-{{--  --}}
-<div class="modal fade" id="modalagregarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            {{--  --}}
-            <div id="modalagregarClienteBody">
-
-            </div>
-            {{--  --}}
-        </div>
-    </div>
-</div>
-{{--  --}}
 {{--  --}}
 <div class="modal fade" id="modalverCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
@@ -134,24 +121,6 @@ function contador(Dtable) {
     $('#c'+c_DEU).html(number_format(Dtable.column(c_DEU,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
 }
 // ///////////////////////////////////////////////////////////////////////
-function agregarCliente(){
-    $.ajax({
-        data: { _token: "{{ csrf_token() }}" },
-        type : "GET",
-        url : "{{route('agregarCliente')}}",
-        beforeSend : function () {
-            $("#modalagregarClienteBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
-        },
-        success:  function (response) {
-            $('#modalagregarCliente').modal({backdrop: 'static',keyboard: false});
-            $('#modalagregarCliente').modal('show');
-            $("#modalagregarClienteBody").html(response);
-        },
-        error: function(error) {
-            swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
-        }
-    });
-}
 
 function verCliente(id){
     $.ajax({

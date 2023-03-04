@@ -21,10 +21,6 @@ class ClientesController extends Controller
         return view('Clientes.index',compact('clientes'))->with(['tittle' => $this->tittle]);
     }
 
-    public function agregarCliente(){
-        return view('Clientes.agregarCliente');
-    }
-
     public function guardarCliente(Request $request){
         $response = array('sta' => 0,'msg' => ''); 
 

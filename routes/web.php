@@ -48,7 +48,6 @@ Route::middleware([RedmineSession::class])->group(function () {
 
     // CLIENTES
     route::get('clientes','ClientesController@index')->name('clientes');
-    route::get('agregarCliente','ClientesController@agregarCliente')->name('agregarCliente');
     route::get('agregarClienteMain','ClientesController@agregarClienteMain')->name('agregarClienteMain');
     route::post('guardarCliente','ClientesController@guardarCliente')->name('guardarCliente');
     
@@ -56,7 +55,10 @@ Route::middleware([RedmineSession::class])->group(function () {
     route::post('updateCliente','ClientesController@updateCliente')->name('updateCliente');
     
 
-    // GYM
-    route::get('gym','GYMController@index')->name('gym');
+    // SERICIOS
+    route::get('servicios','ServiciosController@index')->name('servicios');
+    route::get('deudaCliente','ServiciosController@deudaCliente')->name('deudaCliente');
+    route::post('guardarServicio','ServiciosController@guardarServicio')->name('guardarServicio');
+    route::get('agregarServicioMain','ServiciosController@agregarServicioMain')->name('agregarServicioMain');
 
 });

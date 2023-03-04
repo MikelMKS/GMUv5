@@ -57,6 +57,9 @@ $("#guardarClienteMain").on('submit', function(e){
             if(response.sta == 0){
                 swalTimer('success','ACTUALIZANDO',1000);
                 $('#modalagregarClienteMain').modal('hide'); 
+                if(window.location.pathname == '/GMURep/public/clientes'){
+                    location.reload();
+                }
             }else{
                 swalTimer('warning',response.msg,2000);
             }
