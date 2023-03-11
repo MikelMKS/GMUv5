@@ -256,6 +256,19 @@
               </div>
               {{--  --}}
               {{--  --}}
+              <div class="modal fade" id="modalrevisarMembresias" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        {{--  --}}
+                        <div id="modalrevisarMembresiasBody">
+
+                        </div>
+                        {{--  --}}
+                    </div>
+                </div>
+              </div>
+              {{--  --}}
+              {{--  --}}
               {{-- --------------------------------------------------------------------------------------------------------------------- --}}
           </div>
         </div>

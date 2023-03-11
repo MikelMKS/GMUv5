@@ -19,9 +19,25 @@ class ServiciosController extends Controller
     public function deudaCliente(){
         $cliente = $_REQUEST['cliente'];
 
-        $buscar = DB::connection('mysql')->select("SELECT id,IFNULL(deuda,0) AS deuda FROM clientes WHERE id = '$cliente'");
+        $buscar = DB::connection('mysql')->select("SELECT id,IFNULL(deuda,0) AS deuda FROM clientes WHERE id = $cliente");
 
         return flotFormatoM20($buscar[0]->deuda);
+    }
+
+    public function buscaMembresiasActivas(){
+        $cliente = $_REQUEST['cliente'];
+        
+        $tabla = DB::connection('mysql')->select("SELECT *,CASE WHEN CURDATE() < fechaInicio THEN 'PENDENTE' WHEN CURDATE() > fechaFin THEN 'FINALIZADO' ELSE 'ACTIVO' END AS sta
+        FROM(
+            SELECT p.id,t.tipo,p.observacion,p.fechaInicio,DATE_ADD(fechaInicio, INTERVAL 1 MONTH) AS fechaFin
+            FROM pagos AS p
+            LEFT JOIN(SELECT id,tipo FROM tipopagos) AS t ON p.idTipoPago = t.id
+            WHERE idCliente = $cliente AND p.idTipoPago IN (1,2,3)
+        ) AS sg
+        WHERE CURDATE() <= fechaFin
+        ");
+
+        return view('Servicios.membresiasActivas',compact('tabla'));
     }
 
     public function guardarServicio(Request $request){
@@ -29,6 +45,7 @@ class ServiciosController extends Controller
 
         $cliente = $request->clientesNR;
         $servicio = $request->serviciosNR;
+        $fecini = $request->feciniNR;
         $importe = str_replace(',','',$request->importeNR);
         $pendiente = str_replace(',','',$request->pendienteNR);
         $observacion = $request->observacionNR;
@@ -36,6 +53,10 @@ class ServiciosController extends Controller
         $response = noVacio($cliente,'CLIENTE',$response);
         $response = noVacio($servicio,'SERVICIO',$response);
         $response = noVacio($importe,'IMPORTE',$response);
+
+        if(in_array($servicio,[1,2,3])){
+            $response = noVacio($fecini,'FECHA INICIO',$response);
+        }
 
         if($response['sta'] == 0){
 
@@ -60,6 +81,7 @@ class ServiciosController extends Controller
                 'importe' => $importe,
                 'pendiente' => empty($pendiente) ? null : $pendiente,
                 'observacion' => $observacion,
+                'fechaInicio' => $fecini,
                 'idRegistro' => Session::get('Sid'),
                 'fechaRegistro' => Date('Y-m-d H:i')
             ]);

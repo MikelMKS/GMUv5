@@ -23,6 +23,14 @@
                 @endforeach
             </select>
 
+            <br><br>
+            <div class="text-center" id="labelMembresias" hidden>
+                <label style="color:rgb(132, 22, 191);cursor:pointer;" onclick="buscaMembresiasActivas();">REVISAR MEMBRESIAS</label>
+            </div>
+
+            <label>FECHA INICIO:</label>
+            <input type="date" readonly class="form-control inputtext" id="feciniNRMain" name="feciniNR" placeholder="INICIO" autocomplete="off">
+
             <label>$ IMPORTE:</label>
             <input type="text" readonly class="form-control inputtext pmask2" id="importeNRMain" name="importeNR" onblur="calculoPendiente()" placeholder="IMPORTE" autocomplete="off">
 
@@ -109,6 +117,7 @@ function deudaCliente(cliente){
             success:  function (response) {
                 globalThis.deudaGlobalMain = response;
                 $("#deudaNRMain").val(response);
+                $('#labelMembresias').removeAttr('hidden');
             },
             error: function(error) {
                 swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
@@ -127,6 +136,11 @@ function servicioChange(servicio){
         $('#importeNRMain').val('');
         $('#pendienteNRMain').removeAttr('readonly');
         $('#pendienteNRMain').val('');
+    }
+
+    if(servicio == '1' || servicio == '2' || servicio == '3'){
+        $('#feciniNRMain').removeAttr('readonly');
+        $('#feciniNRMain').val('');
     }
 }
 
@@ -155,6 +169,27 @@ function calculoPendiente(){
 
         $("#deudaNRMain").val(number_format(total,2));
     }
+}
+
+function buscaMembresiasActivas(){
+    var cliente = $('#clientesNRMain').val();
+
+    $.ajax({
+        data: { 'cliente':cliente, _token: "{{ csrf_token() }}" },
+        type : "GET",
+        url : "{{route('buscaMembresiasActivas')}}",
+        beforeSend : function () {
+            $("#modalrevisarMembresiasBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+        },
+        success:  function (response) {
+            $('#modalrevisarMembresias').modal({backdrop: 'static',keyboard: false});
+            $('#modalrevisarMembresias').modal('show');
+            $("#modalrevisarMembresiasBody").html(response);
+        },
+        error: function(error) {
+            swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+        }
+    });
 }
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
