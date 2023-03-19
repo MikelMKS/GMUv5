@@ -65,7 +65,6 @@ var tablaMembresiasActivas = $('#tablaMembresiasActivas').DataTable({
         "sInfoThousands": ","
     },
 })
-console.log('entro');
 }
 // ///////////////////////////////////////////////////////////////////////
 });

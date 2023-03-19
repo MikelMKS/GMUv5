@@ -62,4 +62,8 @@ Route::middleware([RedmineSession::class])->group(function () {
     route::post('guardarServicio','ServiciosController@guardarServicio')->name('guardarServicio');
     route::get('agregarServicioMain','ServiciosController@agregarServicioMain')->name('agregarServicioMain');
 
+
+    // REPORTES
+    route::get('reportes','ReportesController@index')->name('reportes');
+
 });

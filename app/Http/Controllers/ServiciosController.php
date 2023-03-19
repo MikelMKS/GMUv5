@@ -13,7 +13,10 @@ class ServiciosController extends Controller
     }
 
     public function index(){
-        return view('Servicios.index')->with(['tittle' => $this->tittle]);
+        $clientes = DB::connection('mysql')->select("SELECT id,nombre,apellidoP,apellidoM FROM clientes ORDER BY nombre ASC");
+        $servicios = DB::connection('mysql')->select("SELECT * FROM tipopagos ORDER BY id ASC");
+
+        return view('Servicios.index',compact('clientes','servicios'))->with(['tittle' => $this->tittle]);
     }
 
     public function deudaCliente(){
@@ -29,7 +32,12 @@ class ServiciosController extends Controller
         
         $tabla = DB::connection('mysql')->select("SELECT *,CASE WHEN CURDATE() < fechaInicio THEN 'PENDENTE' WHEN CURDATE() > fechaFin THEN 'FINALIZADO' ELSE 'ACTIVO' END AS sta
         FROM(
-            SELECT p.id,t.tipo,p.observacion,p.fechaInicio,DATE_ADD(fechaInicio, INTERVAL 1 MONTH) AS fechaFin
+            SELECT p.id,t.tipo,p.observacion,p.fechaInicio
+            ,CASE 
+                WHEN idTipoPago = 1 THEN DATE_ADD(fechaInicio, INTERVAL 1 MONTH) 
+                WHEN idTipoPago = 2 THEN DATE_ADD(fechaInicio, INTERVAL 1 DAY)
+                WHEN idTipoPago = 3 THEN DATE_ADD(fechaInicio, INTERVAL 1 WEEK)
+            END AS fechaFin
             FROM pagos AS p
             LEFT JOIN(SELECT id,tipo FROM tipopagos) AS t ON p.idTipoPago = t.id
             WHERE idCliente = $cliente AND p.idTipoPago IN (1,2,3)

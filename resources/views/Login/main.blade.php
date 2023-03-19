@@ -163,6 +163,13 @@
         </a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('reportes') }}" id="dashREPORTES">
+          <i class="ri-git-repository-line"></i>
+          <span>REPORTES</span>
+        </a>
+      </li>
+
       @if(Session::get('Stipo') == 1)
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('administrativos') }}" id="dashADMINISTRATIVOS">

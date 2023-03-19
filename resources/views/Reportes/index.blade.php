@@ -3,33 +3,7 @@
 @section('contenido')
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <h5 class="card-title">
-    <div ng-repeat="param in plugin.wsdlURLs track by $index" class="row">
-        <div class="col-sm-4">
-            <select class="form-control" id="clientesFiltro" name="clientesFiltro">
-                <option value=""></option>
-                @foreach ($clientes as $s)
-                    <option value="{{$s->id}}">{{$s->nombre}} {{$s->apellidoP}} {{$s->apellidoM}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-sm-1">
-            <select class="form-control" id="serviciosFiltro" name="serviciosFiltro">
-                <option value=""></option>
-                @foreach ($servicios as $s)
-                    <option value="{{$s->id}}">{{$s->tipo}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-sm-1">
-            <input type="date" class="form-control inputtext" id="fecIniFiltro" name="fecIniFiltro" placeholder="INICIO" autocomplete="off">
-        </div>
-        <div class="col-sm-1">
-            <input type="date" class="form-control inputtext" id="fecFinFiltro" name="fecFinFiltro" placeholder="INICIO" autocomplete="off">
-        </div>
-        <div class="col-sm-4">
-            <button type="button" class="btn btn-success" onclick="agregarServicioMain();">Agregar</button>
-        </div>
-    </div>
+    <button type="button" class="btn btn-success" onclick="agregarServicioMain();">Agregar</button>
 </h5>
 <p></p>
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
@@ -117,26 +91,6 @@ $('.thfilter').on('keyup change blur',function () {let idc = this.getAttribute("
 function contador(Dtable) {
     $('#c'+c_CID).html(number_format(Dtable.column(c_CID,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
 }
-// ///////////////////////////////////////////////////////////////////////
-$('#clientesFiltro').select2();
-$('#clientesFiltro').select2({
-    placeholder: 'CLIENTES',
-    language: {
-        noResults: function(params) {
-            return 'SIN RESULTADOS';
-        }
-    }
-});
-
-$('#serviciosFiltro').select2();
-$('#serviciosFiltro').select2({
-    placeholder: 'SERVICIOS',
-    language: {
-        noResults: function(params) {
-            return 'SIN RESULTADOS';
-        }
-    }
-});
 // ///////////////////////////////////////////////////////////////////////
 </script>
 @endsection
