@@ -88,6 +88,10 @@ function Dtable(){
             "sUrl": "",
             "sInfoThousands": ","
         },
+        buttons: [{
+            text: 'COLUMNAS',
+            extend: 'colvis',
+        }],
     })
     Dtable.buttons().container().appendTo($('.colvisBut'));
 
@@ -101,11 +105,11 @@ function contador(Dtable) {
     $('#c'+c_TIP).html(number_format(Dtable.column(c_TIP,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
     $('#c'+c_REF).html(number_format(Dtable.column(c_REF,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
     $('#c'+c_OBS).html(number_format(Dtable.column(c_OBS,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
-    $('#c'+c_IMP).html(number_format(Dtable.column(c_IMP,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).sum()));
-    // $('#c'+c_PEN).html(number_format(Dtable.column(c_PEN,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).sum()));
-    // $('#c'+c_REG).html(number_format(Dtable.column(c_REG,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
-    // $('#c'+c_FRE).html(number_format(Dtable.column(c_FRE,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
-    // $('#c'+c_FIN).html(number_format(Dtable.column(c_FIN,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_IMP).html(number_format(Dtable.column(c_IMP,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).sum(),2));
+    $('#c'+c_PEN).html(number_format(Dtable.column(c_PEN,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).sum(),2));
+    $('#c'+c_REG).html(number_format(Dtable.column(c_REG,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_FRE).html(number_format(Dtable.column(c_FRE,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_FIN).html(number_format(Dtable.column(c_FIN,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
 }
 // ///////////////////////////////////////////////////////////////////////
 </script>
