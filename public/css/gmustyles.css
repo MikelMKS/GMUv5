@@ -4,13 +4,25 @@
     margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+table.styled-table thead th, table.styled-table thead td {
+    padding: 0px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .col {
     background-color: #da1e1e;
     color: #ffffff;
+    text-align: center !important;
+    border-bottom: none !important;
+}
+
+.colcont {
+    background-color: #da1e1e;
+    color: #ffffff;
+    font-size: 13px !important;
     text-align: center !important;
     border-bottom: none !important;
 }
@@ -108,6 +120,13 @@
 }
 
 .center-block{
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.center-block-tabla{
+    width: 10%;
     display: block;
     margin-right: auto;
     margin-left: auto;

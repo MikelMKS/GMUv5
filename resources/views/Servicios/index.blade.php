@@ -27,32 +27,16 @@
             <input type="date" class="form-control inputtext" id="fecFinFiltro" name="fecFinFiltro" placeholder="INICIO" autocomplete="off">
         </div>
         <div class="col-sm-4">
+            <button type="button" class="btn btn-primary" onclick="tablaShow();">Buscar</button>
             <button type="button" class="btn btn-success" onclick="agregarServicioMain();">Agregar</button>
+            <span class="colvisBut"></span>
         </div>
     </div>
 </h5>
 <p></p>
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <section class="section profile">
-<div class="row">
-    <table id="Dtable" class="styled-table" style="width:100%">
-        <thead>
-            <tr>
-                <th class="col" style="width: 2% !important;">ID</th>
-            </tr>
-        </thead>
-        <tbody>
-                <tr>
-                    <td></td>
-                </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td class="filtercol"><input type="text" class="thfilter" idc="0" id="i0"></td>
-            </tr> 
-        </tfoot>
-    </table>
-</div>
+<div class="row" id="tablaShow"></div>
 </section>
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 {{--  --}}
@@ -84,38 +68,29 @@
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <script type="text/javascript">
 // ///////////////////////////////////////////////////////////////////////
-var c_CID = 0;
-// ///////////////////////////////////////////////////////////////////////
-Dtable();
-function Dtable(){
-var Dtable = $('#Dtable').DataTable({
-    "sDom": "tp",
-    scrollY: "500px",
-    scrollX: true,
-    paging: false,
-    "language": {
-        "sProcessing": "Procesando...",
-        "sLengthMenu": "# REG _MENU_ ",
-        "sZeroRecords": "No se encontraron resultados",
-        "sEmptyTable": "Ningún dato disponible en esta tabla",
-        "sInfo": "_START_ - _END_",
-        "sInfoEmpty": "",
-        "sInfoFiltered": "",
-        "sInfoPostFix": "",
-        "sSearch": "<i class='fa fa-search'></i>",
-        "sUrl": "",
-        "sInfoThousands": ","
-    },
-})
-Dtable.buttons().container().appendTo($('.colvisBut'));
-
-contador(Dtable);
-
-$('.thfilter').on('keyup change blur',function () {let idc = this.getAttribute("idc");Dtable.columns(idc).search( this.value ).draw();contador(Dtable);});
-}
-
-function contador(Dtable) {
-    $('#c'+c_CID).html(number_format(Dtable.column(c_CID,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
+function tablaShow(){
+    let cliente = $('#clientesFiltro').val();
+    let servicio = $('#serviciosFiltro').val();
+    let inicio = $('#fecIniFiltro').val();
+    let fin = $('#fecFinFiltro').val();
+    if(valIsEmpty(cliente)){
+        swalTimer('warning','SELECCIONA UN CLIENTE',2000);
+    }else{
+        $.ajax({
+            data: { 'cliente':cliente,'servicio':servicio,'inicio':inicio,'fin':fin,_token: "{{ csrf_token() }}" },
+            type : "GET",
+            url : "{{route('serciviosTabla')}}",
+            beforeSend : function () {
+                $("#tablaShow").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block-tabla'])}}');
+            },
+            success:  function (response) {
+                $("#tablaShow").html(response);
+            },
+            error: function(error) {
+                swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+            }
+        });
+    }
 }
 // ///////////////////////////////////////////////////////////////////////
 $('#clientesFiltro').select2();

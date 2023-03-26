@@ -13,6 +13,15 @@
     <table id="Dtable" class="styled-table" style="width:100%">
         <thead>
             <tr>
+                <th class="colcont" id="c0"></th>
+                <th class="colcont" id="c1"></th>
+                <th class="colcont" id="c2"></th>
+                <th class="colcont" id="c3"></th>
+                <th class="colcont" id="c4"></th>
+                <th class="colcont" id="c5"></th>
+                <th class="colcont" id="c6"></th>
+            </tr>
+            <tr>
                 <th class="col" style="width: 2% !important;">ID</th>
                 <th class="col" style="width: 50% !important;">NOMBRE</th>
                 <th class="col" style="width: 10% !important;">TELEFONO</th>
@@ -112,13 +121,13 @@ $('.thfilter').on('keyup change blur',function () {let idc = this.getAttribute("
 }
 
 function contador(Dtable) {
-    $('#c'+c_CID).html(number_format(Dtable.column(c_CID,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
-    $('#c'+c_NOM).html(number_format(Dtable.column(c_NOM,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
-    $('#c'+c_TEL).html(number_format(Dtable.column(c_TEL,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
-    $('#c'+c_NAC).html(number_format(Dtable.column(c_NAC,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
-    $('#c'+c_REG).html(number_format(Dtable.column(c_REG,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
-    $('#c'+c_FRE).html(number_format(Dtable.column(c_FRE,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
-    $('#c'+c_DEU).html(number_format(Dtable.column(c_DEU,{filter: 'applied'}).data().unique().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_CID).html(number_format(Dtable.column(c_CID,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_NOM).html(number_format(Dtable.column(c_NOM,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_TEL).html(number_format(Dtable.column(c_TEL,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_NAC).html(number_format(Dtable.column(c_NAC,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_REG).html(number_format(Dtable.column(c_REG,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_FRE).html(number_format(Dtable.column(c_FRE,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+    $('#c'+c_DEU).html(number_format(Dtable.column(c_DEU,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
 }
 // ///////////////////////////////////////////////////////////////////////
 

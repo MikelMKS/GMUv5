@@ -19,6 +19,39 @@ class ServiciosController extends Controller
         return view('Servicios.index',compact('clientes','servicios'))->with(['tittle' => $this->tittle]);
     }
 
+    public function serciviosTabla(){
+        $cliente = $_REQUEST['cliente'];
+        $servicio = $_REQUEST['servicio'];
+        $inicio = $_REQUEST['inicio'];
+        $fin = $_REQUEST['fin'];
+
+        $whereServicio = null;
+        $whereFecha = null;
+
+        if(!empty($servicio)){
+            $whereServicio = "AND idTipoPago = {$servicio}";
+        }
+
+        if(!empty($inicio) && empty($fin)){
+            $whereFecha = "AND fechaRegistro >= {$inicio}";
+        }elseif(empty($inicio) && !empty($fin)){
+            $whereFecha = "AND fechaRegistro <= {$fin}";
+        }elseif(!empty($inicio) && !empty($fin)){
+            $whereFecha = "AND fechaRegistro BETWEEN {$inicio} AND {$fin}";
+        }
+
+        $tabla = DB::connection('mysql')->select("SELECT p.*,tp.tipo AS tipo,tr.tipo AS referencia,u.registro
+        FROM pagos AS p
+        LEFT JOIN(SELECT * FROM tipopagos) AS tp ON p.idTipoPago = tp.id
+        LEFT JOIN(SELECT * FROM tipopagos) AS tr ON p.idReferencia = tr.id
+        LEFT JOIN(SELECT id,user AS registro FROM usuarios) AS u ON p.idRegistro = u.id
+        WHERE idCliente = {$cliente} $whereServicio $whereFecha
+        ORDER BY id ASC
+        ");
+
+        return view('Servicios.serciviosTabla',compact('tabla'));
+    }
+
     public function deudaCliente(){
         $cliente = $_REQUEST['cliente'];
 
@@ -53,6 +86,7 @@ class ServiciosController extends Controller
 
         $cliente = $request->clientesNR;
         $servicio = $request->serviciosNR;
+        $referencia = $request->referenciaNRMain;
         $fecini = $request->feciniNR;
         $importe = str_replace(',','',$request->importeNR);
         $pendiente = str_replace(',','',$request->pendienteNR);
@@ -64,6 +98,8 @@ class ServiciosController extends Controller
 
         if(in_array($servicio,[1,2,3])){
             $response = noVacio($fecini,'FECHA INICIO',$response);
+        }elseif($servicio == 5){
+            $response = noVacio($referencia,'REFERENCIA',$response);
         }
 
         if($response['sta'] == 0){

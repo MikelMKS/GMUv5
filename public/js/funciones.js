@@ -76,6 +76,16 @@ function swalConfirm($title){
   });
 }
 
+function limpiarSelect(selector){
+  $("#"+selector).val('');
+  $('#'+selector).val(null).trigger('change');
+  return;
+}
+
+function limpiarMultiSelect(selector){
+  $('#'+selector).val([]).multipleSelect("refresh");
+}
+
 function hideLoading() {
   swal.close();
 }

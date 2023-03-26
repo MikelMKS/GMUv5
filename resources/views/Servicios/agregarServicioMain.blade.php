@@ -27,6 +27,18 @@
             <div class="text-center" id="labelMembresias" hidden>
                 <label style="color:rgb(132, 22, 191);cursor:pointer;" onclick="buscaMembresiasActivas();">REVISAR MEMBRESIAS</label>
             </div>
+            
+            <div id="divReferencias" hidden>
+            <label>REFERENCIA PAGO:</label>
+            <select class="form-control" id="referenciaNRMain" name="referenciaNR">
+                <option value=""></option>
+                @foreach ($servicios as $s)
+                    @if($s->id != 5)
+                        <option value="{{$s->id}}">{{$s->tipo}}</option>
+                    @endif
+                @endforeach
+            </select>
+            </div>
 
             <label>FECHA INICIO:</label>
             <input type="date" readonly class="form-control inputtext" id="feciniNRMain" name="feciniNR" placeholder="INICIO" autocomplete="off">
@@ -105,6 +117,18 @@ $('#serviciosNRMain').select2({
         }
     }
 });
+
+$('#referenciaNRMain').select2();
+$('#referenciaNRMain').select2({
+    minimumResultsForSearch: -1,
+    dropdownParent: $('#modalagregarServicioMain'),
+    placeholder: 'REFERENCIAS',
+    language: {
+        noResults: function(params) {
+            return 'SIN RESULTADOS';
+        }
+    }
+});
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function deudaCliente(cliente){
     $.ajax({
@@ -126,21 +150,32 @@ function deudaCliente(cliente){
 }
 
 function servicioChange(servicio){
+
+    limpiarSelect('referenciaNRMain');  
+    $('#feciniNRMain').val('');
+
     if(servicio == '5'){
         $('#importeNRMain').removeAttr('readonly');
         $('#importeNRMain').val('');
+
         $('#pendienteNRMain').attr('readonly','true');
         $('#pendienteNRMain').val('');
+
+        $('#divReferencias').removeAttr('hidden');
     }else{
+        $('#divReferencias').attr('hidden','true');
+
         $('#importeNRMain').removeAttr('readonly');
         $('#importeNRMain').val('');
+
         $('#pendienteNRMain').removeAttr('readonly');
         $('#pendienteNRMain').val('');
     }
 
     if(servicio == '1' || servicio == '2' || servicio == '3'){
         $('#feciniNRMain').removeAttr('readonly');
-        $('#feciniNRMain').val('');
+    }else{
+        $('#feciniNRMain').attr('readonly','true');
     }
 }
 
