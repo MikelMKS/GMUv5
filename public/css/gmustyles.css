@@ -37,6 +37,8 @@ table.styled-table thead th, table.styled-table thead td {
 .styled-table td {
     padding: 12px 15px;
     text-align: center;
+    border-right: 1px solid rgba(236, 236, 236, 0.504) !important;
+    border-left: 1px solid rgba(236, 236, 236, 0.504) !important;
 }
 
 .styled-table tbody tr {
@@ -44,7 +46,7 @@ table.styled-table thead th, table.styled-table thead td {
 }
 
 .styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: #ecebeba0;
 }
 
 .styled-table tbody tr:last-of-type {
@@ -57,7 +59,7 @@ table.styled-table thead th, table.styled-table thead td {
 }
 
 .styled-table tbody tr:hover {
-    background: rgba(118, 118, 118, 0.213);
+    background: rgba(255, 0, 0, 0.116);
 }
 
 .lefti {

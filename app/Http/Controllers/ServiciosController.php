@@ -16,10 +16,12 @@ class ServiciosController extends Controller
         $clientes = DB::connection('mysql')->select("SELECT id,nombre,apellidoP,apellidoM FROM clientes ORDER BY nombre ASC");
         $servicios = DB::connection('mysql')->select("SELECT * FROM tipopagos ORDER BY id ASC");
 
-        return view('Servicios.index',compact('clientes','servicios'))->with(['tittle' => $this->tittle]);
+        isset($_REQUEST['idCliente']) ? $idCliente = $_REQUEST['idCliente'] : $idCliente = null;
+
+        return view('Servicios.index',compact('clientes','servicios','idCliente'))->with(['tittle' => $this->tittle]);
     }
 
-    public function serciviosTabla(){
+    public function serviciosTabla(){
         $cliente = $_REQUEST['cliente'];
         $servicio = $_REQUEST['servicio'];
         $inicio = $_REQUEST['inicio'];
@@ -49,7 +51,9 @@ class ServiciosController extends Controller
         ORDER BY id ASC
         ");
 
-        return view('Servicios.serciviosTabla',compact('tabla'));
+        $datosCliente = DB::select("SELECT deuda FROM clientes WHERE id = {$cliente}");
+
+        return view('Servicios.serviciosTabla',compact('tabla','datosCliente'));
     }
 
     public function deudaCliente(){
@@ -86,7 +90,7 @@ class ServiciosController extends Controller
 
         $cliente = $request->clientesNR;
         $servicio = $request->serviciosNR;
-        $referencia = $request->referenciaNRMain;
+        $referencia = $request->referenciaNR;
         $fecini = $request->feciniNR;
         $importe = str_replace(',','',$request->importeNR);
         $pendiente = str_replace(',','',$request->pendienteNR);
@@ -114,7 +118,7 @@ class ServiciosController extends Controller
             }
 
             if($total < 0){
-                $total = 0;
+                $total = null;
             }
 
             DB::connection('mysql')->table('clientes')->where('id','=',$cliente)->update(['deuda' => $total]);
@@ -122,12 +126,13 @@ class ServiciosController extends Controller
             DB::connection('mysql')->table('pagos')->insert([
                 'idCliente' => $cliente,
                 'idTipoPago' => $servicio,
+                'idReferencia' => $referencia,
                 'importe' => $importe,
                 'pendiente' => empty($pendiente) ? null : $pendiente,
                 'observacion' => $observacion,
                 'fechaInicio' => $fecini,
                 'idRegistro' => Session::get('Sid'),
-                'fechaRegistro' => Date('Y-m-d H:i')
+                'fechaRegistro' => Date('Y-m-d H:i'),
             ]);
 
         }

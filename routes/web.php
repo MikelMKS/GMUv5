@@ -57,7 +57,7 @@ Route::middleware([RedmineSession::class])->group(function () {
 
     // SERICIOS
     route::get('servicios','ServiciosController@index')->name('servicios');
-    route::get('serciviosTabla','ServiciosController@serciviosTabla')->name('serciviosTabla');
+    route::get('serviciosTabla','ServiciosController@serviciosTabla')->name('serviciosTabla');
     route::get('deudaCliente','ServiciosController@deudaCliente')->name('deudaCliente');
     route::get('buscaMembresiasActivas','ServiciosController@buscaMembresiasActivas')->name('buscaMembresiasActivas');
     route::post('guardarServicio','ServiciosController@guardarServicio')->name('guardarServicio');
@@ -66,5 +66,6 @@ Route::middleware([RedmineSession::class])->group(function () {
 
     // REPORTES
     route::get('reportes','ReportesController@index')->name('reportes');
+    route::get('reportePendientes','ReportesController@reportePendientes')->name('reportePendientes');
 
 });

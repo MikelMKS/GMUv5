@@ -112,7 +112,7 @@ var Dtable = $('#Dtable').DataTable({
     }],
 })
 
-Dtable.columns([c_REG,c_DEU]).visible(false);
+// Dtable.columns([c_REG,c_DEU]).visible(false);
 Dtable.buttons().container().appendTo($('.colvisBut'));
 
 contador(Dtable);

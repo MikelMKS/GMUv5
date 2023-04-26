@@ -650,7 +650,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-red);
+  color: #899bbd;
   transition: 0.3;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
@@ -662,10 +662,10 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 50%;
 }
 .sidebar-nav .nav-content a:hover, .sidebar-nav .nav-content a.active {
-  color: #4154f1;
+  color: rgb(245, 112, 112);
 }
 .sidebar-nav .nav-content a.active i {
-  background-color: #4154f1;
+  background-color: rgb(245, 112, 112);
 }
 
 /*--------------------------------------------------------------

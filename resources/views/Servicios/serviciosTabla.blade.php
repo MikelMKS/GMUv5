@@ -1,6 +1,9 @@
 <table id="Dtable" class="styled-table" style="width:100%">
     <thead>
         <tr>
+            <th class="colcont" colspan="9" style="font-size: 1.5em !important;border-bottom: 1px solid rgba(236, 236, 236, 0.504) !important;">TOTAL PENDIENTE DEL CLIENTE: $ {{flotFormatoM2($datosCliente[0]->deuda)}}</th>
+        </tr>
+        <tr>
             <th class="colcont" id="c0"></th>
             <th class="colcont" id="c1"></th>
             <th class="colcont" id="c2"></th>

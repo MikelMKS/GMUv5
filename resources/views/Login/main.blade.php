@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>{{$tittle}}</title>
+  <title>{{$tittle}} @if(isset($subtit)) - {{$subtit}} @endif</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -165,10 +165,17 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('reportes') }}" id="dashREPORTES">
+        <a class="nav-link collapsed" data-bs-target="#chart-REPORTES" data-bs-toggle="collapse" href="" id="dashREPORTES">
           <i class="ri-git-repository-line"></i>
           <span>REPORTES</span>
         </a>
+        <ul id="chart-REPORTES" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a id="cPendientes" href="{{ route('reportePendientes') }}">
+              <i class="bi bi-circle"></i><span>Pendientes</span>
+            </a>
+          </li>
+        </ul>
       </li>
 
       @if(Session::get('Stipo') == 1)
@@ -187,7 +194,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>{{$tittle}}</h1>
+        <h1>{{$tittle}} @if(isset($subtit)) - {{$subtit}} @endif</h1>
         {{-- <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -300,6 +307,14 @@
   <!-- Template Main JS File -->
   <script src="./../public/js/main.js"></script>
 
+  @php
+    if(isset($chart)){
+      echo "<script> var chartA = '{$chart}' </script>";
+    }else{
+      echo "<script> var chartA = null </script>";
+    }
+  @endphp
+
   <script type="text/javascript">
     var tittle = '{{$tittle}}';
 
@@ -400,6 +415,8 @@
     }
 
     $('#dash'+tittle).removeClass("collapsed");
+    $('#chart-'+tittle).addClass("show");
+    $('#'+chartA).addClass("active");
   </script>
 </body>
 

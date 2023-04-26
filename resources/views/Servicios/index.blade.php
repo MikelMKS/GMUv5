@@ -8,13 +8,14 @@
             <select class="form-control" id="clientesFiltro" name="clientesFiltro">
                 <option value=""></option>
                 @foreach ($clientes as $s)
-                    <option value="{{$s->id}}">{{$s->nombre}} {{$s->apellidoP}} {{$s->apellidoM}}</option>
+                    <option value="{{$s->id}}" @if($idCliente == $s->id) selected @endif>{{$s->nombre}} {{$s->apellidoP}} {{$s->apellidoM}}</option>
                 @endforeach
             </select>
         </div>
         <div class="col-sm-1">
             <select class="form-control" id="serviciosFiltro" name="serviciosFiltro">
                 <option value=""></option>
+                <option value="0">Todos</option>
                 @foreach ($servicios as $s)
                     <option value="{{$s->id}}">{{$s->tipo}}</option>
                 @endforeach
@@ -68,7 +69,14 @@
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <script type="text/javascript">
 // ///////////////////////////////////////////////////////////////////////
+var idCliente = '{{$idCliente}}';
+// ///////////////////////////////////////////////////////////////////////
+if(!valIsEmpty(idCliente)){
+    tablaShow();
+}
+// ///////////////////////////////////////////////////////////////////////
 function tablaShow(){
+    $('.colvisBut').html('');
     let cliente = $('#clientesFiltro').val();
     let servicio = $('#serviciosFiltro').val();
     let inicio = $('#fecIniFiltro').val();
@@ -79,7 +87,7 @@ function tablaShow(){
         $.ajax({
             data: { 'cliente':cliente,'servicio':servicio,'inicio':inicio,'fin':fin,_token: "{{ csrf_token() }}" },
             type : "GET",
-            url : "{{route('serciviosTabla')}}",
+            url : "{{route('serviciosTabla')}}",
             beforeSend : function () {
                 $("#tablaShow").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block-tabla'])}}');
             },
