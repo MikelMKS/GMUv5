@@ -67,5 +67,7 @@ Route::middleware([RedmineSession::class])->group(function () {
     // REPORTES
     route::get('reportes','ReportesController@index')->name('reportes');
     route::get('reportePendientes','ReportesController@reportePendientes')->name('reportePendientes');
+    route::get('reporteCorte','ReportesController@reporteCorte')->name('reporteCorte');
+    route::get('reporteCorteTabla','ReportesController@reporteCorteTabla')->name('reporteCorteTabla');
 
 });

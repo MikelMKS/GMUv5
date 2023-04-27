@@ -171,6 +171,11 @@
         </a>
         <ul id="chart-REPORTES" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
+            <a id="cCorte" href="{{ route('reporteCorte') }}">
+              <i class="bi bi-circle"></i><span>Corte</span>
+            </a>
+          </li>
+          <li>
             <a id="cPendientes" href="{{ route('reportePendientes') }}">
               <i class="bi bi-circle"></i><span>Pendientes</span>
             </a>

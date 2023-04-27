@@ -33,6 +33,10 @@ table.styled-table thead th, table.styled-table thead td {
     border-top: none !important;
 }
 
+.tdhbottom {
+    border-bottom: 1px solid rgba(236, 236, 236, 0.504) !important;
+}
+
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;
