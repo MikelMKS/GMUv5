@@ -10,7 +10,7 @@
 <style>
     body {
     padding-top: 90px;
-    background-image: url('./../public/img/slides-1.jpg');
+    background-image: url('./../public/img/fondo.png');
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */

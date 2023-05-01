@@ -1,8 +1,8 @@
 <table id="Dtable" class="styled-table" style="width:100%">
     <thead>
         <tr>
-            <th class="colcont tdhbottom" style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;" colspan="3">GENERAL</th>
-            <th class="colcont tdhbottom" style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;" colspan="3">GYM</th>
+            <th class="colcont tdhbottom" style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;" colspan="3">GENERAL | {{$inicio}} / {{$fin}}</th>
+            <th class="colcont tdhbottom" style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;" colspan="3">MENSUALIDAD</th>
             <th class="colcont tdhbottom" colspan="4">SERVICIOS</th>
         </tr>
         <tr>
@@ -36,14 +36,14 @@
             <tr>
                 <td>{{$numero}}</td>
                 <td>{{$t->Fecha}}</td>
-                <td class="lefti" style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;">{{$t->Cliente}}</td>
+                <td class="lefti drillin" style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;" onclick="verCliente('{{$t->idCliente}}')">{{$t->Cliente}}</td>
                 <td>{{$t->InicioGym}}</td>
                 <td>{{flotFormatoM($t->PagosGym)}}</td>
-                <td style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;">{{flotFormatoM2Pesos($t->TotalGym)}}</td>
-                <td>{{flotFormatoM2Pesos($t->Semanal)}}</td>
-                <td>{{flotFormatoM2Pesos($t->Visita)}}</td>
-                <td>{{flotFormatoM2Pesos($t->Herbalife)}}</td>
-                <td>{{flotFormatoM2Pesos($t->Total)}}</td>
+                <td style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;" class="drillin" onclick="drillSeccion('MENSUALIDAD','{{$t->idCliente}}','{{$t->Cliente}}',1)">{{flotFormatoM2Pesos($t->TotalGym)}}</td>
+                <td class="drillin" onclick="drillSeccion('SEMANAL','{{$t->idCliente}}','{{$t->Cliente}}',3)">{{flotFormatoM2Pesos($t->Semanal)}}</td>
+                <td class="drillin" onclick="drillSeccion('VISITA','{{$t->idCliente}}','{{$t->Cliente}}',2)">{{flotFormatoM2Pesos($t->Visita)}}</td>
+                <td class="drillin" onclick="drillSeccion('HERBALIFE','{{$t->idCliente}}','{{$t->Cliente}}',4)">{{flotFormatoM2Pesos($t->Herbalife)}}</td>
+                <td class="drillin" onclick="drillTotalGeneral('{{$t->idCliente}}','{{$t->Cliente}}')">{{flotFormatoM2Pesos($t->Total)}}</td>
             </tr>
             @php $numero++; @endphp
         @endforeach
@@ -63,6 +63,33 @@
         </tr> 
     </tfoot>
 </table>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+{{--  --}}
+<div class="modal fade" id="modalverCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            {{--  --}}
+            <div id="modalverClienteBody">
+
+            </div>
+            {{--  --}}
+        </div>
+    </div>
+</div>
+{{--  --}}
+{{--  --}}
+<div class="modal fade" id="modaldrillSeccion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            {{--  --}}
+            <div id="modaldrillSeccionBody">
+
+            </div>
+            {{--  --}}
+        </div>
+    </div>
+</div>
+{{--  --}}
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <script type="text/javascript">
 // ///////////////////////////////////////////////////////////////////////
@@ -139,6 +166,67 @@ function contador(Dtable) {
                         '$'+number_format(Dtable.column(c_TOT,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).sum(),2)+' '+
                         '('+number_format(Dtable.column(c_TOT,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count())+')'    
     );
+}
+// ///////////////////////////////////////////////////////////////////////
+function verCliente(id){
+    $.ajax({
+        data: { 'id':id, _token: "{{ csrf_token() }}" },
+        type : "GET",
+        url : "{{route('verCliente')}}",
+        beforeSend : function () {
+            $("#modalverClienteBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+        },
+        success:  function (response) {
+            $('#modalverCliente').modal({backdrop: 'static',keyboard: false});
+            $('#modalverCliente').modal('show');
+            $("#modalverClienteBody").html(response);
+        },
+        error: function(error) {
+            swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+        }
+    });
+}
+
+function drillSeccion(seccion,idCliente,cliente,idTipo){
+    let inicio = '{{$inicio}}'; 
+    let fin = '{{$fin}}';
+    $.ajax({
+        data: { 'seccion':seccion,'idCliente':idCliente,'cliente':cliente,'idTipo':idTipo,'inicio':inicio,'fin':fin, _token: "{{ csrf_token() }}" },
+        type : "GET",
+        url : "{{route('drillSeccion')}}",
+        beforeSend : function () {
+            $("#modaldrillSeccionBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+        },
+        success:  function (response) {
+            $('#modaldrillSeccion').modal({backdrop: 'static',keyboard: false});
+            $('#modaldrillSeccion').modal('show');
+            $("#modaldrillSeccionBody").html(response);
+        },
+        error: function(error) {
+            swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+        }
+    });
+}
+
+function drillTotalGeneral(idCliente,cliente){
+    let inicio = '{{$inicio}}'; 
+    let fin = '{{$fin}}';
+    $.ajax({
+        data: { 'idCliente':idCliente,'cliente':cliente,'inicio':inicio,'fin':fin, _token: "{{ csrf_token() }}" },
+        type : "GET",
+        url : "{{route('drillTotalGeneral')}}",
+        beforeSend : function () {
+            $("#modaldrillSeccionBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+        },
+        success:  function (response) {
+            $('#modaldrillSeccion').modal({backdrop: 'static',keyboard: false});
+            $('#modaldrillSeccion').modal('show');
+            $("#modaldrillSeccionBody").html(response);
+        },
+        error: function(error) {
+            swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+        }
+    });
 }
 // ///////////////////////////////////////////////////////////////////////
 </script>
