@@ -72,7 +72,7 @@ class ServiciosController extends Controller
             SELECT p.id,t.tipo,p.observacion,p.fechaInicio
             ,CASE 
                 WHEN idTipoPago = 1 THEN DATE_ADD(fechaInicio, INTERVAL 1 MONTH) 
-                WHEN idTipoPago = 2 THEN DATE_ADD(fechaInicio, INTERVAL 1 DAY)
+                WHEN idTipoPago = 2 THEN fechaInicio
                 WHEN idTipoPago = 3 THEN DATE_ADD(fechaInicio, INTERVAL 1 WEEK)
             END AS fechaFin
             FROM pagos AS p

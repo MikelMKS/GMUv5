@@ -29,6 +29,8 @@ Route::middleware([RedmineSession::class])->group(function () {
     route::get('revisarAlertas','AlertasController@revisarAlertas')->name('revisarAlertas');
     route::get('verNotificacion','AlertasController@verNotificacion')->name('verNotificacion');
     route::get('enteradoCumpleaños','AlertasController@enteradoCumpleaños')->name('enteradoCumpleaños');
+    route::get('enteradoFinMes','AlertasController@enteradoFinMes')->name('enteradoFinMes');
+    route::get('enteradoFinSemana','AlertasController@enteradoFinSemana')->name('enteradoFinSemana');
 
     route::get('index','InicioController@index')->name('index');
     route::get('tabla','InicioController@tabla')->name('tabla');

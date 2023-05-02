@@ -1,6 +1,6 @@
 <?php 
     $cantidadAlertas = DB::connection('mysql')->select("SELECT COUNT(id) AS dato FROM alertas WHERE idUsuario = ".Session::get('Sid')." AND visto = 0");
-    $alertasNav = DB::connection('mysql')->select("SELECT *,REPLACE(texto,'pesosdata',dato) AS escrito
+    $alertasNav = DB::connection('mysql')->select("SELECT *,REPLACE(texto,'pesosdata',dato) AS escrito,visto
     FROM alertas AS a
     LEFT JOIN(SELECT id AS idt,nombre AS tipo,icono,texto FROM tipoalertas) AS t ON a.idTipo = t.idt
     WHERE idUsuario = ".Session::get('Sid')."
@@ -26,7 +26,7 @@
         <li>
             <hr class="dropdown-divider">
         </li>
-        <li class="notification-item" style="cursor:pointer;" onclick="verNotificacion('{{$a->idTipo}}')">
+        <li style="cursor:pointer;" @if($a->visto == 0) class="notification-item" @else class="notification-item-visto" @endif onclick="verNotificacion('{{$a->idTipo}}')">
             <i class="{{$a->icono}}"></i>
             <div>
             <h4>{{$a->tipo}}</h4>
@@ -43,3 +43,24 @@
     </ul><!-- End Notification Dropdown Items -->
 
   </li><!-- End Notification Nav -->
+
+<script type="text/javascript">
+  function verNotificacion(tipo){
+      $.ajax({
+            data: { 'tipo':tipo, _token: "{{ csrf_token() }}" },
+            type : "GET",
+            url : "{{route('verNotificacion')}}",
+            beforeSend : function () {
+                $("#modalverNotificacionBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+            },
+            success:  function (response) {
+                $('#modalverNotificacion').modal({backdrop: 'static',keyboard: false});
+                $('#modalverNotificacion').modal('show');
+                $("#modalverNotificacionBody").html(response);
+            },
+            error: function(error) {
+                swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+            }
+      });
+  }
+</script>

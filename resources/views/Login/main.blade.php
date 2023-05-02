@@ -398,27 +398,6 @@
         });
     }
 
-    function verNotificacion(tipo){
-      if(tipo == 1){
-        $.ajax({
-              data: { 'tipo':tipo, _token: "{{ csrf_token() }}" },
-              type : "GET",
-              url : "{{route('verNotificacion')}}",
-              beforeSend : function () {
-                  $("#modalverNotificacionBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
-              },
-              success:  function (response) {
-                  $('#modalverNotificacion').modal({backdrop: 'static',keyboard: false});
-                  $('#modalverNotificacion').modal('show');
-                  $("#modalverNotificacionBody").html(response);
-              },
-              error: function(error) {
-                  swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
-              }
-        });
-      }
-    }
-
     $('#dash'+tittle).removeClass("collapsed");
     $('#chart-'+tittle).addClass("show");
     $('#'+chartA).addClass("active");

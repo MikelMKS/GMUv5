@@ -24,6 +24,7 @@ class CreatePagosTable extends Migration {
 			$table->integer('idRegistro')->nullable()->index('quienRegistro');
 			$table->dateTime('fechaRegistro')->nullable();
 			$table->date('fechaInicio')->nullable();
+			$table->integer('alertado')->nullable();
 		});
 	}
 

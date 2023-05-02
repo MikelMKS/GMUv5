@@ -242,6 +242,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 
+.card-text2 {
+  color: rgb(67, 130, 197);
+}
+
 .card-body {
   padding: 0 20px 20px 20px;
 }
@@ -478,6 +482,31 @@ h1, h2, h3, h4, h5, h6 {
   color: #919191;
 }
 .header-nav .notifications .notification-item:hover {
+  background-color: #f6f9ff;
+}
+
+.header-nav .notifications .notification-item-visto {
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+  transition: 0.3s;
+  background-color: #ececec;
+}
+.header-nav .notifications .notification-item-visto i {
+  margin: 0 20px 0 10px;
+  font-size: 24px;
+}
+.header-nav .notifications .notification-item-visto h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.header-nav .notifications .notification-item-visto p {
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: #919191;
+}
+.header-nav .notifications .notification-item-visto:hover {
   background-color: #f6f9ff;
 }
 .header-nav .messages .message-item {
