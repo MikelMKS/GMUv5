@@ -73,6 +73,8 @@ Route::middleware([RedmineSession::class])->group(function () {
     route::get('reporteCorte','ReportesController@reporteCorte')->name('reporteCorte');
     route::get('reporteCorteTabla','ReportesController@reporteCorteTabla')->name('reporteCorteTabla');
     route::get('drillSeccion','ReportesController@drillSeccion')->name('drillSeccion');
-    route::get('drillTotalGeneral','ReportesController@drillTotalGeneral')->name('drillTotalGeneral');
+    route::get('drillTotalGeneral','ReportesController@drillTotalGeneral')->name('drillTotalGeneral');    
 
+    route::get('reporteMembresias','ReportesController@reporteMembresias')->name('reporteMembresias');
+    route::get('reporteMembresiasTabla','ReportesController@reporteMembresiasTabla')->name('reporteMembresiasTabla');
 });

@@ -21,6 +21,8 @@ class ReportesController extends Controller
 
         return view('Reportes.Pendientes.reportePendientes',compact('tabla'))->with(['tittle' => $this->tittle,'subtit' => 'Pendientes','chart' => 'cPendientes']);
     }
+
+    // ///////////////////////////////////////////////////////////////////////////////
     
     public function reporteCorte(){
         return view('Reportes.Corte.reporteCorte')->with(['tittle' => $this->tittle,'subtit' => 'Corte','chart' => 'cCorte']);
@@ -83,5 +85,23 @@ class ReportesController extends Controller
         ");
 
         return view('Reportes.Corte.drillTotalGeneral',compact('tabla','seccion','cliente','inicio','fin'));
+    }
+
+    // ///////////////////////////////////////////////////////////////////////////////
+
+    public function reporteMembresias(){
+        $clientes = DB::select("SELECT id,CONCAT(IFNULL(nombre,''),' ',IFNULL(apellidoP,''),' ',IFNULL(apellidoM,'')) AS cliente FROM clientes");
+
+        return view('Reportes.Membresias.reporteMembresias',compact('clientes'))->with(['tittle' => $this->tittle,'subtit' => 'Membresias','chart' => 'cMembresias']);
+    }
+
+    public function reporteMembresiasTabla(){
+        $inicio = $_REQUEST['inicio'];
+        $fin = $_REQUEST['fin'];
+
+        $tabla = DB::select("
+        ");
+
+        return view('Reportes.Membresias.reporteMembresiasTabla',compact('tabla','inicio','fin'));
     }
 }

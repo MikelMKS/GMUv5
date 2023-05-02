@@ -37,6 +37,9 @@
     <!-- SELECT2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- MULTISELECT -->
+    <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">
+    <script src="{{ url('js/multiple-select.min.js')}}"></script>
     <!-- SWAL -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- MASK -->
@@ -170,6 +173,11 @@
           <span>REPORTES</span>
         </a>
         <ul id="chart-REPORTES" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a id="cMembresias" href="{{ route('reporteMembresias') }}">
+              <i class="bi bi-circle"></i><span>Membresias</span>
+            </a>
+          </li>
           <li>
             <a id="cCorte" href="{{ route('reporteCorte') }}">
               <i class="bi bi-circle"></i><span>Corte</span>
