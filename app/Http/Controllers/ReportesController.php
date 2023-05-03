@@ -91,17 +91,54 @@ class ReportesController extends Controller
 
     public function reporteMembresias(){
         $clientes = DB::select("SELECT id,CONCAT(IFNULL(nombre,''),' ',IFNULL(apellidoP,''),' ',IFNULL(apellidoM,'')) AS cliente FROM clientes");
+        $tipos = DB::select("SELECT id,tipo FROM tipopagos WHERE id IN (1,2,3)");
 
-        return view('Reportes.Membresias.reporteMembresias',compact('clientes'))->with(['tittle' => $this->tittle,'subtit' => 'Membresias','chart' => 'cMembresias']);
+        return view('Reportes.Membresias.reporteMembresias',compact('clientes','tipos'))->with(['tittle' => $this->tittle,'subtit' => 'Membresias','chart' => 'cMembresias']);
     }
 
     public function reporteMembresiasTabla(){
-        $inicio = $_REQUEST['inicio'];
-        $fin = $_REQUEST['fin'];
+        $cliente = $_REQUEST['cliente'];
+        $tipo = $_REQUEST['tipo'];
+        $estatus = $_REQUEST['estatus'];
 
-        $tabla = DB::select("
+        $inCliente = null;
+        $inTipo = null;
+        $inEstatus = null;
+
+        foreach($cliente as $c){
+            $inCliente.=$c.',';
+        }
+        foreach($tipo as $t){
+            $inTipo.=$t.',';
+        }
+        foreach($estatus as $e){
+            $inEstatus.=$e.',';
+        }
+
+        $inCliente = rtrim($inCliente,',');
+        $inTipo = rtrim($inTipo,',');
+        $inEstatus = rtrim($inEstatus,',');
+
+        $tabla = DB::select("SELECT *,CASE WHEN sta = 'P' THEN 'PENDIENTE' WHEN sta = 'A' THEN 'ACTIVO' ELSE 'FINALIZADO' END AS estatus 
+        FROM(
+                    SELECT *,CASE WHEN CURDATE() < fechaInicio THEN 'P' WHEN CURDATE() > fechaFin THEN 'F' ELSE 'A' END AS sta
+                    FROM(
+                                SELECT p.id,p.idCliente,cliente,t.tipo,p.observacion,p.fechaInicio
+                                ,CASE 
+                                        WHEN idTipoPago = 1 THEN DATE_ADD(fechaInicio, INTERVAL 1 MONTH) 
+                                        WHEN idTipoPago = 2 THEN fechaInicio
+                                        WHEN idTipoPago = 3 THEN DATE_ADD(fechaInicio, INTERVAL 1 WEEK)
+                                END AS fechaFin
+                                FROM pagos AS p
+                                LEFT JOIN(SELECT id,CONCAT(IFNULL(nombre,''),' ',IFNULL(apellidoP,''),' ',IFNULL(apellidoM,'')) AS cliente FROM clientes) AS c ON p.idCliente = c.id
+                                LEFT JOIN(SELECT id,tipo FROM tipopagos) AS t ON p.idTipoPago = t.id
+                                WHERE p.idCliente IN ($inCliente) AND p.idTipoPago IN ($inTipo) 
+                    ) AS s_a
+        ) AS s_b
+        WHERE sta IN ($inEstatus)
+        ORDER BY fechaInicio ASC
         ");
 
-        return view('Reportes.Membresias.reporteMembresiasTabla',compact('tabla','inicio','fin'));
+        return view('Reportes.Membresias.reporteMembresiasTabla',compact('tabla'));
     }
 }
