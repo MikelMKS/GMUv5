@@ -31,7 +31,7 @@
                 @foreach($tabla as $t)
                     <tr>
                         <td>{{$numero}}</td>
-                        <td>{{$t->fecha}}</td>
+                        <td>{{fechaFormato($t->fecha)}}</td>
                         <td>{{$t->tipo}}</td>
                         <td>{{$t->referencia}}</td>
                         <td class="lefti">{{$t->observacion}}</td>

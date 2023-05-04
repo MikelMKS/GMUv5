@@ -18,8 +18,8 @@
             <tbody>
                 @foreach($tabla as $t)
                     <tr>
-                        <td>{{$t->fechaInicio}}</td>
-                        <td>{{$t->fechaFin}}</td>
+                        <td>{{fechaFormato($t->fechaInicio)}}</td>
+                        <td>{{fechaFormato($t->fechaFin)}}</td>
                         <td>{{$t->tipo}}</td>
                         <td class="lefti">{{$t->observacion}}</td>
                         <td>{{$t->sta}}</td>

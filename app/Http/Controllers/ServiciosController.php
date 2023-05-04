@@ -35,11 +35,11 @@ class ServiciosController extends Controller
         }
 
         if(!empty($inicio) && empty($fin)){
-            $whereFecha = "AND fechaRegistro >= {$inicio}";
+            $whereFecha = "AND fechaRegistro >= '{$inicio}'";
         }elseif(empty($inicio) && !empty($fin)){
-            $whereFecha = "AND fechaRegistro <= {$fin}";
+            $whereFecha = "AND fechaRegistro <= '{$fin}'";
         }elseif(!empty($inicio) && !empty($fin)){
-            $whereFecha = "AND fechaRegistro BETWEEN {$inicio} AND {$fin}";
+            $whereFecha = "AND fechaRegistro BETWEEN '{$inicio}' AND '{$fin}'";
         }
 
         $tabla = DB::connection('mysql')->select("SELECT p.*,tp.tipo AS tipo,tr.tipo AS referencia,u.registro
@@ -146,5 +146,33 @@ class ServiciosController extends Controller
         $servicios = DB::connection('mysql')->select("SELECT * FROM tipopagos ORDER BY id ASC");
 
         return view('Servicios.agregarServicioMain',compact('clientes','servicios'));
+    }
+
+    public function cambiarFecIni(){
+        $id = $_REQUEST['id'];
+        
+        $datos = DB::connection('mysql')->select("SELECT * 
+        FROM pagos AS p
+        LEFT JOIN(SELECT id AS idT,tipo FROM tipopagos) AS t ON p.idTipoPago = t.idT
+        WHERE id = {$id}
+        ");
+
+        return view('Servicios.cambiarFecIni',compact('datos'));
+    }
+
+    public function guardarEdicionMembresia(Request $request){
+        $response = array('sta' => 0,'msg' => ''); 
+
+        $id = $request->idMembresiaEditar;
+        $fecini = $request->feciniEMemb;
+        $observacion = $request->observacionEMemb;
+
+        DB::connection('mysql')->table('pagos')->where('id','=',$id)->update([
+            'observacion' => $observacion,
+            'fechaInicio' => $fecini,
+            'idRegistro' => Session::get('Sid'),
+        ]);
+
+        echo json_encode($response);
     }
 }

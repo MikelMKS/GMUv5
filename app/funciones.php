@@ -18,8 +18,8 @@ function fechaFormato($fecha){
     }else{
         $dia = date('d', strtotime($fecha));
         $mes = substr(mes(date('n', strtotime($fecha))), 0, 3);
-        $anio = date('y', strtotime($fecha));
-        $fechaFin = $dia .'-'. $mes .'-'. $anio;
+        $anio = date('Y', strtotime($fecha));
+        $fechaFin = $dia .''. $mes .''. $anio;
     }
     return $fechaFin;
 }

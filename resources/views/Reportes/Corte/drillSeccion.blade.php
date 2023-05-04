@@ -29,7 +29,7 @@
                 @foreach($tabla as $t)
                     <tr>
                         <td>{{$numero}}</td>
-                        <td>{{$t->fecha}}</td>
+                        <td>{{fechaFormato($t->fecha)}}</td>
                         <td>{{$t->tipo}}</td>
                         <td class="lefti">{{$t->observacion}}</td>
                         <td>{{flotFormatoM2Pesos($t->importe)}}</td>

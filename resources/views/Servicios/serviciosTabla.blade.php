@@ -37,8 +37,8 @@
                 <td>{{$t->importe}}</td>
                 <td>{{$t->pendiente}}</td>
                 <td>{{$t->registro}}</td>
-                <td>{{$t->fechaRegistro}}</td>
-                <td>{{$t->fechaInicio}}</td>
+                <td>{{fechaFormato($t->fechaRegistro)}}</td>
+                <td @if($t->fechaInicio != null) class="drillin" onclick="cambiarFecIni('{{$t->id}}')" @endif>{{fechaFormato($t->fechaInicio)}}</td>
             </tr>
             @php $numero++; @endphp
         @endforeach
@@ -57,6 +57,20 @@
         </tr> 
     </tfoot>
 </table>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+{{--  --}}
+<div class="modal fade" id="modalCambiarFecIni" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            {{--  --}}
+            <div id="modalCambiarFecIniBody">
+
+            </div>
+            {{--  --}}
+        </div>
+    </div>
+</div>
+{{--  --}}
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <script type="text/javascript">
 // ///////////////////////////////////////////////////////////////////////
@@ -116,6 +130,25 @@ function contador(Dtable) {
     $('#c'+c_REG).html(number_format(Dtable.column(c_REG,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
     $('#c'+c_FRE).html(number_format(Dtable.column(c_FRE,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
     $('#c'+c_FIN).html(number_format(Dtable.column(c_FIN,{filter: 'applied'}).data().filter(function(value, index){return value != "" ? true : false;}).count()));
+}
+// ///////////////////////////////////////////////////////////////////////
+function cambiarFecIni(id){
+    $.ajax({
+        data: { 'id':id, _token: "{{ csrf_token() }}" },
+        type : "GET",
+        url : "{{route('cambiarFecIni')}}",
+        beforeSend : function () {
+            $("#modalCambiarFecIniBody").html('{{Html::image('img/loading.gif', 'CARGANDO ESPERE', ['class' => 'center-block'])}}');
+        },
+        success:  function (response) {
+            $('#modalCambiarFecIni').modal({backdrop: 'static',keyboard: false});
+            $('#modalCambiarFecIni').modal('show');
+            $("#modalCambiarFecIniBody").html(response);
+        },
+        error: function(error) {
+            swalTimer('error','HA OCURRIDO UN ERROR, INTENTALO NUEVAMENTE',2000);
+        }
+    });
 }
 // ///////////////////////////////////////////////////////////////////////
 </script>

@@ -64,6 +64,8 @@ Route::middleware([RedmineSession::class])->group(function () {
     route::get('buscaMembresiasActivas','ServiciosController@buscaMembresiasActivas')->name('buscaMembresiasActivas');
     route::post('guardarServicio','ServiciosController@guardarServicio')->name('guardarServicio');
     route::get('agregarServicioMain','ServiciosController@agregarServicioMain')->name('agregarServicioMain');
+    route::get('cambiarFecIni','ServiciosController@cambiarFecIni')->name('cambiarFecIni');
+    route::post('guardarEdicionMembresia','ServiciosController@guardarEdicionMembresia')->name('guardarEdicionMembresia');
 
 
     // REPORTES

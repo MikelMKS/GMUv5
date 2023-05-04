@@ -26,8 +26,8 @@
                 <td>{{$numero}}</td>
                 <td class="lefti drillin" style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;" onclick="verCliente('{{$t->idCliente}}')">{{$t->cliente}}</td>
                 <td>{{$t->tipo}}</td>
-                <td>{{$t->fechaInicio}}</td>
-                <td>{{$t->fechaFin}}</td>
+                <td>{{fechaFormato($t->fechaInicio)}}</td>
+                <td>{{fechaFormato($t->fechaFin)}}</td>
                 <td>{{$t->observacion}}</td>
                 <td>{{$t->estatus}}</td>
             </tr>

@@ -35,9 +35,9 @@
         @foreach($tabla as $t)
             <tr>
                 <td>{{$numero}}</td>
-                <td>{{$t->Fecha}}</td>
+                <td>{{fechaFormato($t->Fecha)}}</td>
                 <td class="lefti drillin" style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;" onclick="verCliente('{{$t->idCliente}}')">{{$t->Cliente}}</td>
-                <td>{{$t->InicioGym}}</td>
+                <td>{{fechaFormato($t->InicioGym)}}</td>
                 <td>{{flotFormatoM($t->PagosGym)}}</td>
                 <td style="border-right: 5px solid rgba(236, 236, 236, 0.504) !important;" class="drillin" onclick="drillSeccion('MENSUALIDAD','{{$t->idCliente}}','{{$t->Cliente}}',1)">{{flotFormatoM2Pesos($t->TotalGym)}}</td>
                 <td class="drillin" onclick="drillSeccion('SEMANAL','{{$t->idCliente}}','{{$t->Cliente}}',3)">{{flotFormatoM2Pesos($t->Semanal)}}</td>

@@ -37,10 +37,10 @@
                     <td class="drillin" onclick="verCliente('{{$t->id}}')">{{$t->id}}</td>
                     <td class="lefti">{{$t->nombre}} {{$t->apellidoP}} {{$t->apellidoM}}</td>
                     <td>{{$t->telefono}}</td>
-                    <td>{{$t->fechaNac}}</td>
+                    <td>{{fechaFormato($t->fechaNac)}}</td>
                     <td>{{$t->registro}}</td>
-                    <td>{{$t->fechaRegistro}}</td>
-                    <td>{{$t->deuda}}</td>
+                    <td>{{fechaFormato($t->fechaRegistro)}}</td>
+                    <td>{{flotFormatoM2Pesos($t->deuda)}}</td>
                 </tr>
             @endforeach
         </tbody>
